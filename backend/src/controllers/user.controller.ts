@@ -7,8 +7,8 @@ import type { CreateUserRequest, UserResponse } from '../types/user.types';
 export const createUser = async (req: CreateUserRequest, res: Response) => {
     try {
         const { username, email, latitude, longitude } = req.body;
-        const user = await prisma.user.create({
-          data: { username, email, latitude, longitude },
+        const user: UserResponse = await prisma.user.create({
+            data: { username, email, latitude, longitude },
         })
 
         const apiResponse = new ApiResponse(201, user, 'User created successfully');

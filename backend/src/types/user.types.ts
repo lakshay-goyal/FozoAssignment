@@ -15,7 +15,4 @@ export interface UserResponse {
     email: string;
     latitude: number;
     longitude: number;
-    createdAt: Date;
-    updatedAt: Date;
 }
-
