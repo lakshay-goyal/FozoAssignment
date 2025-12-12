@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
+import * as Location from 'expo-location'
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -64,8 +65,50 @@ export default function SignUpScreen() {
       if (signUp.status === 'complete') {
         const sessionId = signUp.createdSessionId
         if (sessionId) {
-          await setActive({ session: sessionId })
-          router.replace('/')
+          try {
+            // Get user location
+            const { status } = await Location.requestForegroundPermissionsAsync()
+            if (status !== 'granted') {
+              setError('Location permission is required. Please enable it in settings.')
+              return
+            }
+            const location = await Location.getCurrentPositionAsync({})
+            const { latitude, longitude } = location.coords
+
+            
+            // Store the user Data into the database
+            const userEmail = signUp.emailAddress || emailAddress
+            const backendUrl = process.env.EXPO_PUBLIC_BACKEND_URL
+            if (!backendUrl) {
+              setError('Backend URL is not configured. Please check your .env file.')
+              return
+            }
+
+            const response = await fetch(`${backendUrl}/users`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                username,
+                email: userEmail,
+                latitude,
+                longitude,
+              }),
+            })
+
+            if (!response.ok) {
+              const errorData = await response.json().catch(() => ({ error: 'Failed to create user' }))
+              throw new Error(errorData.error || 'Failed to create user in backend')
+            }
+
+            // User created successfully, now set active session
+            await setActive({ session: sessionId })
+            router.replace('/')
+          } catch (locationErr: any) {
+            console.error('Error getting location or creating user:', locationErr)
+            setError(locationErr.message || 'Failed to get location or create user. Please try again.')
+          }
         } else {
           setError('Verification successful, but no session was created. Please try signing in.')
         }

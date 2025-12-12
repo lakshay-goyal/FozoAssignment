@@ -9,6 +9,7 @@ app.use(express.json())
 app.post('/users', async (req, res) => {
   try {
     const { username, email, latitude, longitude } = req.body
+    console.log({ username, email, latitude, longitude })
     const user = await prisma.user.create({
       data: { username, email, latitude, longitude },
     })
