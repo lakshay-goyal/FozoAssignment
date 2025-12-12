@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { getRestaurants } from '../controllers/restaurant.controller';
+import { getRestaurants, getRestaurantById } from '../controllers/restaurant.controller';
 
 const router = Router();
 router.post('/', getRestaurants);
+router.post('/:restaurantId', getRestaurantById);
 
 export default router;

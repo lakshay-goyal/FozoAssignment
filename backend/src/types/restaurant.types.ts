@@ -6,6 +6,15 @@ export interface GetRestaurantsRequest extends Request {
     };
 }
 
+export interface GetRestaurantByIdRequest extends Request {
+    params: {
+        restaurantId: string;
+    };
+    body: {
+        username: string;
+    };
+}
+
 export interface RestaurantWithDistance {
     id: number;
     name: string;
