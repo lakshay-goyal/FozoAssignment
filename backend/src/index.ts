@@ -1,25 +1,14 @@
-import express from 'express'
-import { prisma } from './database/prisma'
+import express from 'express';
+import userRoutes from './routes/user.routes';
 
-const app = express()
-const port = process.env.PORT || 3000
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.json())
+app.use(express.json());
 
-app.post('/users', async (req, res) => {
-  try {
-    const { username, email, latitude, longitude } = req.body
-    console.log({ username, email, latitude, longitude })
-    const user = await prisma.user.create({
-      data: { username, email, latitude, longitude },
-    })
-    res.status(201).json(user)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: 'Internal server error' })
-  }
-})
+// Routes
+app.use('/users', userRoutes);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`)
-})
+  console.log(`Server running on port ${port}`);
+});
