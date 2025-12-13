@@ -11,9 +11,11 @@ import {
 } from 'react-native'
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
+import * as Location from 'expo-location'
 import { SignOutButton } from '../../components/SignOutButton'
 import { RestaurantCard } from '../../components/restaurant/RestaurantCard'
 import { restaurantService } from '../../services/restaurant.service'
+import { userService } from '../../services/user.service'
 import type { RestaurantWithDistance } from '../../types/restaurant.types'
 
 const { width: screenWidth } = Dimensions.get('window')
@@ -27,6 +29,7 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null)
   const [refreshing, setRefreshing] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [userAddress, setUserAddress] = useState<string>('Loading...')
 
   const scrollRef = useRef<ScrollView>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -50,9 +53,48 @@ export default function Page() {
     }
   }
 
+  const fetchUserLocation = async () => {
+    if (!user?.username) return
+
+    try {
+      const userData = await userService.getUserByUsername(user.username)
+      
+      // Reverse geocode coordinates to get address
+      const reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude: userData.latitude,
+        longitude: userData.longitude,
+      })
+
+      if (reverseGeocode && reverseGeocode.length > 0) {
+        const address = reverseGeocode[0]
+        // Format address: street, city, region, country
+        const addressParts = [
+          address.street,
+          address.city,
+          address.region,
+          address.country,
+        ].filter(Boolean)
+        
+        const formattedAddress = addressParts.length > 0 
+          ? addressParts.join(', ')
+          : `${address.streetNumber || ''} ${address.street || ''}`.trim() || 
+            `${address.city || ''}, ${address.region || ''}`.trim() ||
+            'Location not available'
+        
+        setUserAddress(formattedAddress)
+      } else {
+        setUserAddress('Location not available')
+      }
+    } catch (err: any) {
+      console.error('Failed to fetch user location:', err)
+      setUserAddress('Location not available')
+    }
+  }
+
   useEffect(() => {
     if (user?.username) {
       fetchRestaurants()
+      fetchUserLocation()
     }
   }, [user?.username])
 
@@ -99,13 +141,15 @@ export default function Page() {
         {/* HEADER */}
         <View className="px-6 pt-6 pb-4">
           <View className="flex-row justify-between items-center mb-4">
-            <View>
+            <View className="flex-1 mr-3">
               <Text className="text-xs text-gray-500">Your location</Text>
-              <Text className="text-base font-semibold text-black">
-                19578 Sun Cir ▼
+              <Text className="text-base font-semibold text-black" numberOfLines={1} ellipsizeMode="tail">
+                {userAddress} ▼
               </Text>
             </View>
-            <SignOutButton />
+            <View className="flex-shrink-0">
+              <SignOutButton/>
+            </View>
           </View>
           <View className="flex-row items-center bg-white rounded-full px-4 py-3 shadow-sm">
             <Text className="text-gray-400 mr-2">🔍</Text>

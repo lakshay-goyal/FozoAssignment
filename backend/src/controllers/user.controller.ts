@@ -31,3 +31,30 @@ export const createUser = async (req: CreateUserRequest, res: Response) => {
         return res.status(apiError.statusCode).json(apiError);
     }
 };
+
+export const getUserByUsername = async (req: Request, res: Response) => {
+    try {
+        const { username } = req.params;
+        if (!username) {
+            const apiError = new ApiError(400, 'Username is required', []);
+            return res.status(apiError.statusCode).json(apiError);
+        }
+        const user = await prisma.user.findUnique({ where: { username } });
+        if (!user) {
+            const apiError = new ApiError(404, 'User not found', []);
+            return res.status(apiError.statusCode).json(apiError);
+        }
+        const userResponse: UserResponse = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            latitude: user.latitude,
+            longitude: user.longitude,
+        };
+        const apiResponse = new ApiResponse(200, userResponse, 'User fetched successfully');
+        return res.status(apiResponse.statusCode).json(apiResponse);
+    } catch (err: any) {
+        const apiError = new ApiError(500, 'Internal server error', []);
+        return res.status(apiError.statusCode).json(apiError);
+    }
+};
