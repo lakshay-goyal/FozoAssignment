@@ -288,7 +288,7 @@ export default function Page() {
         >
           {/* HEADER */}
           <View className="px-6 pt-12 pb-4">
-            <View className="flex-row justify-between items-center mb-4">
+            <View className="flex-row justify-between items-center mb-4 gap-6">
               {/* Menu Button */}
               <TouchableOpacity
                 className="w-10 h-10 bg-white rounded-lg items-center justify-center shadow-sm"
@@ -304,8 +304,8 @@ export default function Page() {
               </TouchableOpacity>
 
               {/* Location */}
-              <View className="flex-1 items-center">
-                <View className="flex-row items-center">
+              <View className="flex-1 items-center gap-3">
+                <View className="flex-row items-center border border-gray-200 rounded-full px-2 py-1">
                   <Text
                     style={{ fontFamily: fontFamily.medium }}
                     className="text-[13px] text-[#737477] mr-1"
@@ -316,7 +316,7 @@ export default function Page() {
                 </View>
                 <Text
                   style={{ fontFamily: fontFamily.medium }}
-                  className="text-[13px] text-[#242731] mt-0.5"
+                  className="text-[13px] text-[#242731] mt-0.5 text-center"
                 >
                   {userAddress}
                 </Text>
