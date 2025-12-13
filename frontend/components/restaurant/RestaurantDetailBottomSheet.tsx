@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { X, Heart, Truck, Clock, Star, Plus, Minus } from 'lucide-react-native'
-import type { RestaurantWithDistance, MenuItem } from '../../types/restaurant.types'
+import type { RestaurantWithDistance, MenuItem } from '../../types'
 import { fontFamily } from '../../fonts'
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window')

@@ -6,7 +6,7 @@ import {
   FlatList,
 } from "react-native"
 import { Heart, ArrowLeft, Flame } from "lucide-react-native"
-import type { RestaurantWithDistance, MenuItem } from "../../types/restaurant.types"
+import type { RestaurantWithDistance, MenuItem } from "../../types"
 import { MenuCard } from "./MenuCard"
 
 interface RestaurantDetailProps {

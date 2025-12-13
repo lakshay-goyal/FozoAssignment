@@ -1,7 +1,7 @@
 import { Text, TextInput, View } from "react-native"
-import { cn } from "../app/utils/cn"
+import { cn } from "../../app/utils/cn"
 import { useState } from "react"
-import { fontFamily } from "../fonts"
+import { fontFamily } from "../../fonts"
 
 type InputVariant = "default" | "floating" | "filled"
 type InputTheme = "light" | "dark" | "primary"
@@ -41,7 +41,7 @@ const borderStyles: Record<BorderVariant, string> = {
     underline: "border-b",
 }
 
-export const InputFeild = ({
+export const InputField = ({
     value,
     label,
     placeholder,

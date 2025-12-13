@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { Link, useRouter } from 'expo-router'
 import { useSignIn } from '@clerk/clerk-expo'
-import { BurgerBackground } from '@/components/BurgerBackground'
-import { DraggableCard } from '@/components/DraggableCard'
-import { InputFeild } from '@/components/InputFeild'
-import { Button } from '@/components/Button'
+import { BurgerBackground, DraggableCard } from '@/components/auth'
+import { InputField, Button } from '@/components/ui'
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
@@ -55,7 +53,7 @@ export default function Page() {
           </View>
         ) : null}
 
-        <InputFeild
+        <InputField
           value={emailAddress}
           placeholder="Enter email"
           onChangeText={(t: string) => {
@@ -65,7 +63,7 @@ export default function Page() {
           secureTextEntry={false}
         />
 
-        <InputFeild
+        <InputField
           value={password}
           placeholder="Enter password"
           onChangeText={(t: string) => {

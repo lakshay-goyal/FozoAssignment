@@ -1,4 +1,4 @@
-import type { RestaurantWithDistance } from '../types/restaurant.types'
+import type { RestaurantWithDistance } from '../types'
 
 const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL
 

@@ -10,9 +10,9 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { useUser, useClerk } from '@clerk/clerk-expo'
 import { Mail, User, LogOut } from 'lucide-react-native'
-import { fontFamily } from '../fonts'
+import { fontFamily } from '../../fonts'
 import * as Linking from 'expo-linking'
-import { Button } from './ui/Button'
+import { Button } from '../ui/Button'
 
 interface ProfilePopupProps {
   visible: boolean
@@ -205,4 +205,3 @@ export const ProfilePopup: React.FC<ProfilePopupProps> = ({
     </Modal>
   )
 }
-

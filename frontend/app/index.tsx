@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import PageLoading from "../components/PageLoading";
+import { PageLoading } from "../components/ui";
 
 export default function Index() {
   const { isSignedIn, isLoaded } = useAuth();

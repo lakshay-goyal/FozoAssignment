@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import type { MenuItem } from '../../types/restaurant.types'
+import type { MenuItem } from '../../types'
 import { ShoppingCart } from 'lucide-react-native'
 
 interface MenuCardProps {

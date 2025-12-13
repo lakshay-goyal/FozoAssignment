@@ -1,6 +1,6 @@
 import { TouchableOpacity, View, Text, Image } from 'react-native'
 import { Heart, Truck, Clock } from 'lucide-react-native'
-import type { RestaurantWithDistance } from '../../types/restaurant.types'
+import type { RestaurantWithDistance } from '../../types'
 import { fontFamily } from '../../fonts'
 
 interface RestaurantCardProps {

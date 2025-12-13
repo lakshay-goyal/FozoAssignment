@@ -1,60 +1,36 @@
-import { useEffect, useState } from 'react'
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { useState } from 'react'
+import { View, ScrollView, TouchableOpacity, Text } from 'react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useUser } from '@clerk/clerk-expo'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { restaurantService } from '../../../services/restaurant.service'
-import type { RestaurantWithDistance, MenuItem } from '../../../types/restaurant.types'
-import { RestaurantDetail } from '../../../components/restaurant/RestaurantDetail'
-import { RestaurantDetailBottomSheet } from '../../../components/restaurant/RestaurantDetailBottomSheet'
+import { RestaurantDetail, RestaurantDetailBottomSheet } from '../../../components/restaurant'
+import { useRestaurant } from '../hooks'
+import { LoadingState, ErrorState } from '../components'
+import type { MenuItem } from '../../../types'
 
 export default function RestaurantDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const router = useRouter()
   const { user } = useUser()
-  const [restaurant, setRestaurant] = useState<RestaurantWithDistance | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(null)
 
-  useEffect(() => {
-    const fetchRestaurant = async () => {
-      if (!user?.username) {
-        setError('User not found')
-        setLoading(false)
-        return
-      }
-
-      try {
-        setLoading(true)
-        const data = await restaurantService.getRestaurantById(id, user.username)
-        setRestaurant(data)
-      } catch (err: any) {
-        setError(err.message || 'Something went wrong')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchRestaurant()
-  }, [id, user?.username])
+  const { restaurant, loading, error, fetchRestaurant } = useRestaurant(id, user?.username || undefined)
 
   if (loading) {
-    return (
-      <View className="flex-1 bg-[#FFF0DA] items-center justify-center">
-        <ActivityIndicator size="large" color="#C83A1A" />
-        <Text className="font-sans mt-4 text-gray-600">Loading restaurant details...</Text>
-      </View>
-    )
+    return <LoadingState message="Loading restaurant details..." />
   }
 
   if (error || !restaurant) {
     return (
       <View className="flex-1 bg-[#FFF0DA] items-center justify-center px-4">
-        <Text className="font-sans text-red-500 text-lg mb-4 text-center">{error || 'Restaurant not found'}</Text>
+        <ErrorState
+          message={error || 'Restaurant not found'}
+          onRetry={fetchRestaurant}
+          retryLabel="Retry"
+        />
         <TouchableOpacity
           onPress={() => router.back()}
-          className="bg-[#C83A1A] rounded-xl py-3 px-6"
+          className="bg-[#C83A1A] rounded-xl py-3 px-6 mt-4"
         >
           <Text className="font-sans text-white font-semibold">Go Back</Text>
         </TouchableOpacity>
@@ -82,7 +58,6 @@ export default function RestaurantDetailScreen() {
         </View>
       </ScrollView>
 
-      {/* Bottom Sheet */}
       {selectedMenuItem && (
         <RestaurantDetailBottomSheet
           restaurant={restaurant}

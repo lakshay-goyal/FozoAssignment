@@ -3,10 +3,8 @@ import { Text, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import * as Location from 'expo-location'
-import { BurgerBackground } from '@/components/BurgerBackground'
-import { DraggableCard } from '@/components/DraggableCard'
-import { InputFeild } from '@/components/InputFeild'
-import { Button } from '@/components/Button'
+import { BurgerBackground, DraggableCard } from '@/components/auth'
+import { InputField, Button } from '@/components/ui'
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -149,7 +147,7 @@ export default function SignUpScreen() {
             </View>
           ) : null}
 
-          <InputFeild
+          <InputField
             value={code}
             placeholder="Enter your verification code"
             onChangeText={(code: string) => {
@@ -178,7 +176,7 @@ export default function SignUpScreen() {
           </View>
         ) : null}
 
-        <InputFeild
+        <InputField
           value={username}
           placeholder="Enter username"
           onChangeText={(username: string) => {
@@ -187,7 +185,7 @@ export default function SignUpScreen() {
           }}
           secureTextEntry={false}
         />
-        <InputFeild
+        <InputField
           value={emailAddress}
           placeholder="Enter email"
           onChangeText={(email: string) => {
@@ -196,7 +194,7 @@ export default function SignUpScreen() {
           }}
           secureTextEntry={false}
         />
-        <InputFeild
+        <InputField
           value={password}
           placeholder="Enter password"
           onChangeText={(password: string) => {
