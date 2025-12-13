@@ -18,6 +18,7 @@ export default function SignUpScreen() {
   const [pendingVerification, setPendingVerification] = useState(false)
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
+  const [isDragging, setIsDragging] = useState(false)
 
   const getErrorMessage = (err: any): string => {
     if (err?.errors && err.errors.length > 0) {
@@ -137,11 +138,11 @@ export default function SignUpScreen() {
       <View className="flex-1 bg-[#D6EE72]">
         {/* Background */}
         <View className="flex-1">
-          <BurgerBackground />
+          <BurgerBackground hideLogo={isDragging} />
         </View>
 
         {/* Verify Email Card */}
-        <DraggableCard title="Verify your email">
+        <DraggableCard title="Verify your email" onDragStateChange={setIsDragging}>
           {error ? (
             <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
               <Text className="text-red-700 text-sm">{error}</Text>
@@ -166,11 +167,11 @@ export default function SignUpScreen() {
     <View className="flex-1 bg-[#D6EE72]">
       {/* Background */}
       <View className="flex-1">
-        <BurgerBackground />
+        <BurgerBackground hideLogo={isDragging} />
       </View>
 
       {/* Sign-Up-Form */}
-      <DraggableCard title="Sign up to continue">
+      <DraggableCard title="Sign up to continue" onDragStateChange={setIsDragging}>
         {error ? (
           <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
             <Text className="text-red-700 text-sm">{error}</Text>

@@ -14,6 +14,7 @@ export default function Page() {
   const [emailAddress, setEmailAddress] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isDragging, setIsDragging] = useState(false)
 
   const getErrorMessage = (err: any): string => {
     if (err?.errors?.length) return err.errors[0].message
@@ -43,11 +44,11 @@ export default function Page() {
     <View className="flex-1 bg-[#D6EE72]">
       {/* Background */}
       <View className="flex-1">
-        <BurgerBackground />
+        <BurgerBackground hideLogo={isDragging} />
       </View>
 
       {/* Sign-In-Form */}
-      <DraggableCard title="Sign in to continue">
+      <DraggableCard title="Sign in to continue" onDragStateChange={setIsDragging}>
         {error ? (
           <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
             <Text className="text-red-700 text-sm">{error}</Text>
