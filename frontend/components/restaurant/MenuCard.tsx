@@ -59,8 +59,8 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
         )}
 
         {/* PRICE AND ADD TO CART */}
-        <View className="flex-row items-center justify-between mt-auto gap-2">
-          <Text className="text-md font-semibold text-[#F97316]">
+        <View className="flex-row items-center justify-between mt-auto gap-1">
+          <Text className="text-sm font-semibold text-[#F97316]">
             ₹{menuItem.price.toFixed(2)}
           </Text>
 
