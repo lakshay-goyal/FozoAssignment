@@ -1,5 +1,6 @@
 import { Redirect, Stack } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export default function AuthRoutesLayout() {
   const { isSignedIn } = useAuth()
@@ -8,5 +9,12 @@ export default function AuthRoutesLayout() {
     return <Redirect href={'/'} />
   }
 
-  return <Stack />
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Stack>
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+      </Stack>
+    </GestureHandlerRootView>
+  )
 }
