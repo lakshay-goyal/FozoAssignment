@@ -14,7 +14,7 @@ export default function Layout() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-[#FFF0DA]">
+    <SafeAreaView className="flex-1 bg-[#FAFAFA]">
       <Stack screenOptions={{ headerShown: false }} />
     </SafeAreaView>
   )

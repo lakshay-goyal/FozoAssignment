@@ -42,7 +42,8 @@ export const getRestaurants = async (req: GetRestaurantsRequest, res: Response) 
 
             return {
                 ...restaurant,
-                distance: Math.round(distance * 100) / 100, // Round to 2 decimal places
+                distance: Math.round(distance * 100) / 100,
+                imageUrl: restaurant.imageUrl || null,
             };
         });
 

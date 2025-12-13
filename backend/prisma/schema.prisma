@@ -24,6 +24,7 @@ model Restaurant {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
+  imageUrl    String?
   tags        String[]
   latitude    Float
   longitude   Float

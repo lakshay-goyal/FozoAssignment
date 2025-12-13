@@ -19,10 +19,11 @@ export interface RestaurantWithDistance {
     id: number;
     name: string;
     description: string | null;
+    imageUrl: string | null;
     tags: string[];
     latitude: number;
     longitude: number;
-    distance: number; // in kilometers
+    distance: number;
     createdAt: Date;
     updatedAt: Date;
 }

@@ -60,7 +60,7 @@ export default function RestaurantDetailScreen() {
   }
 
   return (
-    <ScrollView className="flex-1 bg-[#FFF0DA]">
+    <ScrollView className="flex-1 bg-[#FAFAFA]">
       <View className="p-6">
         <RestaurantDetail
           restaurant={restaurant}
