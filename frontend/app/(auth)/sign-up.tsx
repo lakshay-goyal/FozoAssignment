@@ -1,20 +1,12 @@
 import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View, Dimensions } from 'react-native'
+import { Text, View } from 'react-native'
 import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import * as Location from 'expo-location'
 import { BurgerBackground } from '@/components/BurgerBackground'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  runOnJS,
-} from 'react-native-reanimated'
-
-const { height } = Dimensions.get('window')
-const MIN_HEIGHT = height * 0.5
-const MAX_HEIGHT = height
+import { DraggableCard } from '@/components/DraggableCard'
+import { InputFeild } from '@/components/InputFeild'
+import { Button } from '@/components/Button'
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp()
@@ -26,10 +18,6 @@ export default function SignUpScreen() {
   const [pendingVerification, setPendingVerification] = useState(false)
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const [isExpanded, setIsExpanded] = useState(false)
-
-  const cardHeight = useSharedValue(MIN_HEIGHT)
-  const startHeight = useSharedValue(MIN_HEIGHT)
 
   const getErrorMessage = (err: any): string => {
     if (err?.errors && err.errors.length > 0) {
@@ -40,31 +28,6 @@ export default function SignUpScreen() {
     }
     return 'An unexpected error occurred. Please try again.'
   }
-
-  /* ---------------- DRAG GESTURE ---------------- */
-  const panGesture = Gesture.Pan()
-    .onBegin(() => {
-      startHeight.value = cardHeight.value
-    })
-    .onUpdate((e) => {
-      const nextHeight = startHeight.value - e.translationY
-      if (nextHeight >= MIN_HEIGHT && nextHeight <= MAX_HEIGHT) {
-        cardHeight.value = nextHeight
-      }
-    })
-    .onEnd(() => {
-      if (cardHeight.value > height * 0.75) {
-        cardHeight.value = withSpring(MAX_HEIGHT)
-        runOnJS(setIsExpanded)(true)
-      } else {
-        cardHeight.value = withSpring(MIN_HEIGHT)
-        runOnJS(setIsExpanded)(false)
-      }
-    })
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    height: cardHeight.value,
-  }))
 
   const onSignUpPress = async () => {
     if (!isLoaded) return
@@ -172,137 +135,83 @@ export default function SignUpScreen() {
   if (pendingVerification) {
     return (
       <View className="flex-1 bg-[#D6EE72]">
-        {/* TOP HERO */}
+        {/* Background */}
         <View className="flex-1">
           <BurgerBackground />
         </View>
 
-        {/* DRAGGABLE BOTTOM CARD */}
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            style={animatedStyle}
-            className={`absolute bottom-0 w-full bg-white rounded-t-3xl px-6 pb-8 ${
-              isExpanded ? 'justify-center' : 'pt-6'
-            }`}
-          >
-            <View className={isExpanded ? 'items-center' : ''}>
-              {/* HANDLE */}
-              {!isExpanded && (
-                <View className="w-10 h-1 bg-gray-400 rounded-full self-center mb-4" />
-              )}
-
-              <Text className="text-xl font-bold text-center mb-6 text-gray-800">
-                Verify your email
-              </Text>
-
-              {error ? (
-                <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
-                  <Text className="text-red-700 text-sm">{error}</Text>
-                </View>
-              ) : null}
-
-              <TextInput
-                value={code}
-                placeholder="Enter your verification code"
-                onChangeText={(code) => {
-                  setCode(code)
-                  setError('')
-                }}
-                className="border border-gray-400 rounded-xl p-4 mb-4 bg-white w-full"
-              />
-              <TouchableOpacity
-                onPress={onVerifyPress}
-                className="bg-[#D6EE72] rounded-xl py-4 mb-4 w-full"
-              >
-                <Text className="text-center font-semibold text-gray-900">
-                  Verify
-                </Text>
-              </TouchableOpacity>
+        {/* Verify Email Card */}
+        <DraggableCard title="Verify your email">
+          {error ? (
+            <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
+              <Text className="text-red-700 text-sm">{error}</Text>
             </View>
-          </Animated.View>
-        </GestureDetector>
+          ) : null}
+
+          <InputFeild
+            value={code}
+            placeholder="Enter your verification code"
+            onChangeText={(code: string) => {
+              setCode(code)
+              setError('')
+            }}
+          />
+          <Button title="Verify" onPress={onVerifyPress} />
+        </DraggableCard>
       </View>
     )
   }
 
   return (
     <View className="flex-1 bg-[#D6EE72]">
-      {/* TOP HERO */}
+      {/* Background */}
       <View className="flex-1">
         <BurgerBackground />
       </View>
 
-      {/* DRAGGABLE BOTTOM CARD */}
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          style={animatedStyle}
-          className={`absolute bottom-0 w-full bg-white rounded-t-3xl px-6 pb-8 ${
-            isExpanded ? 'justify-center' : 'pt-6'
-          }`}
-        >
-          <View className={isExpanded ? 'items-center' : ''}>
-            {/* HANDLE */}
-            {!isExpanded && (
-              <View className="w-10 h-1 bg-gray-400 rounded-full self-center mb-4" />
-            )}
-
-            <Text className="text-xl font-bold text-center mb-6 text-gray-800">
-              Sign up to continue
-            </Text>
-
-            {error ? (
-              <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
-                <Text className="text-red-700 text-sm">{error}</Text>
-              </View>
-            ) : null}
-
-            <TextInput
-              autoCapitalize="none"
-              value={username}
-              placeholder="Enter username"
-              onChangeText={(username) => {
-                setUsername(username)
-                setError('')
-              }}
-              className="border border-gray-400 rounded-xl p-4 mb-4 bg-white w-full"
-            />
-            <TextInput
-              autoCapitalize="none"
-              value={emailAddress}
-              placeholder="Enter email"
-              onChangeText={(email) => {
-                setEmailAddress(email)
-                setError('')
-              }}
-              className="border border-gray-400 rounded-xl p-4 mb-4 bg-white w-full"
-            />
-            <TextInput
-              value={password}
-              placeholder="Enter password"
-              secureTextEntry={true}
-              onChangeText={(password) => {
-                setPassword(password)
-                setError('')
-              }}
-              className="border border-gray-400 rounded-xl p-4 mb-6 bg-white w-full"
-            />
-            <TouchableOpacity
-              onPress={onSignUpPress}
-              className="bg-[#D6EE72] rounded-xl py-4 mb-4 w-full"
-            >
-              <Text className="text-center font-semibold text-gray-900">
-                Continue
-              </Text>
-            </TouchableOpacity>
-            <View className="flex-row justify-center">
-              <Text className="text-gray-700">Already have an account? </Text>
-              <Link href="./sign-in">
-                <Text className="font-semibold text-gray-900">Sign in</Text>
-              </Link>
-            </View>
+      {/* Sign-Up-Form */}
+      <DraggableCard title="Sign up to continue">
+        {error ? (
+          <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
+            <Text className="text-red-700 text-sm">{error}</Text>
           </View>
-        </Animated.View>
-      </GestureDetector>
+        ) : null}
+
+        <InputFeild
+          value={username}
+          placeholder="Enter username"
+          onChangeText={(username: string) => {
+            setUsername(username)
+            setError('')
+          }}
+          secureTextEntry={false}
+        />
+        <InputFeild
+          value={emailAddress}
+          placeholder="Enter email"
+          onChangeText={(email: string) => {
+            setEmailAddress(email)
+            setError('')
+          }}
+          secureTextEntry={false}
+        />
+        <InputFeild
+          value={password}
+          placeholder="Enter password"
+          onChangeText={(password: string) => {
+            setPassword(password)
+            setError('')
+          }}
+          secureTextEntry={true}
+        />
+        <Button title="Sign up" onPress={onSignUpPress} />
+        <View className="flex-row justify-center">
+          <Text className="text-gray-700">Already have an account? </Text>
+          <Link href="./sign-in">
+            <Text className="font-semibold text-gray-900">Sign in</Text>
+          </Link>
+        </View>
+      </DraggableCard>
     </View>
   )
 }
