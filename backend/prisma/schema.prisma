@@ -30,7 +30,23 @@ model Restaurant {
   longitude   Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  menu        Menu[]
 
   @@index([latitude, longitude])
   @@index([name])
+}
+
+model Menu {
+  id           Int        @id @default(autoincrement())
+  item_name    String
+  price        Float
+  imageUrl     String?
+  description  String?
+  isVeg        Boolean    @default(true)
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([restaurantId])
 }

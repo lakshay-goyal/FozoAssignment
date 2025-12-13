@@ -28,8 +28,12 @@ export const getRestaurants = async (req: GetRestaurantsRequest, res: Response) 
             return res.status(apiError.statusCode).json(apiError);
         }
 
-        // Fetch all restaurants
-        const restaurants = await prisma.restaurant.findMany();
+        // Fetch all restaurants with menu items
+        const restaurants = await prisma.restaurant.findMany({
+            include: {
+                menu: true,
+            },
+        });
 
         // Calculate distance for each restaurant and return the restaurants with the distance
         const restaurantsWithDistance: RestaurantWithDistance[] = restaurants.map((restaurant) => {
@@ -97,9 +101,12 @@ export const getRestaurantById = async (req: GetRestaurantByIdRequest, res: Resp
             return res.status(apiError.statusCode).json(apiError);
         }
 
-        // Fetch restaurant by ID
+        // Fetch restaurant by ID with menu items
         const restaurant = await prisma.restaurant.findUnique({
             where: { id: restaurantIdNum },
+            include: {
+                menu: true,
+            },
         });
 
         if (!restaurant) {

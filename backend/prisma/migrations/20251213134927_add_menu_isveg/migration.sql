@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Menu" ADD COLUMN     "isVeg" BOOLEAN NOT NULL DEFAULT true;

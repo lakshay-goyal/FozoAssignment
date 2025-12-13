@@ -1,5 +1,5 @@
 import "./global.css";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -34,9 +34,12 @@ export default function Index() {
         className="flex-1 items-center justify-center"
       >
         <View className="items-center justify-center h-full w-full">
-          <Text className="text-[42px] font-semibold text-[#C83A1A] tracking-[1px]">
-            FOZO
-          </Text>
+          <Image
+            source={{ uri: "https://getfozo.in/brand-full.png" }}
+            className="w-32 h-16"
+            resizeMode="contain"
+          />
+
         </View>
       </LinearGradient>
     );

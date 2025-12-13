@@ -15,6 +15,18 @@ export interface GetRestaurantByIdRequest extends Request {
     };
 }
 
+export interface MenuItem {
+    id: number;
+    item_name: string;
+    price: number;
+    imageUrl: string | null;
+    description: string | null;
+    isVeg: boolean;
+    restaurantId: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface RestaurantWithDistance {
     id: number;
     name: string;
@@ -24,6 +36,7 @@ export interface RestaurantWithDistance {
     latitude: number;
     longitude: number;
     distance: number;
+    menu?: MenuItem[];
     createdAt: Date;
     updatedAt: Date;
 }

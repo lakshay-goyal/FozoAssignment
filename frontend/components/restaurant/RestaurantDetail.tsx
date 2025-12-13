@@ -3,10 +3,11 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native"
 import { Heart, ArrowLeft, Flame } from "lucide-react-native"
-import type { RestaurantWithDistance } from "../../types/restaurant.types"
-import { useState } from "react"
+import type { RestaurantWithDistance, MenuItem } from "../../types/restaurant.types"
+import { MenuCard } from "./MenuCard"
 
 interface RestaurantDetailProps {
   restaurant: RestaurantWithDistance
@@ -17,7 +18,11 @@ export const RestaurantDetail = ({
   restaurant,
   onBackPress,
 }: RestaurantDetailProps) => {
-  const [quantity, setQuantity] = useState(1)
+  const handleAddToCart = (menuItem: MenuItem) => {
+    // TODO: Implement add to cart functionality
+    console.log('Add to cart:', menuItem)
+  }
+
   return (
     <View className="flex-1 bg-[#FAFAFA]">
       {/* HEADER */}
@@ -70,85 +75,38 @@ export const RestaurantDetail = ({
         </Text>
       </View>
 
-      {/* TAGS */}
+      {/* MENU */}
       <View className="px-5 mb-6">
-        <Text className="text-lg font-semibold mb-4">
-          Tags
+        <Text className="text-xl font-bold text-black mb-4">
+          Menu
         </Text>
-
-        {restaurant.tags?.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            className="flex-row items-center justify-between mb-4"
-          >
-            <View className="flex-row items-center gap-3">
-              <View
-                className={`w-5 h-5 rounded-full border ${item
-                  ? "bg-[#F97316] border-[#F97316]"
-                  : "border-gray-400"
-                  }`} />
-              <Text className="text-base text-black">{item.toUpperCase()}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* ADD TO CART */}
-      <View className="px-5 pb-6">
-        <View className="flex-row items-center bg-[#F97316] rounded-2xl overflow-hidden">
-          <TouchableOpacity
-            className="flex-1 py-4"
-            activeOpacity={0.8}
-          >
-            <Text className="text-center text-white font-semibold text-lg">
-              Add to Cart
-            </Text>
-          </TouchableOpacity>
-
-          <View className="flex-row items-center bg-[#E86512] px-4 py-2 rounded-xl mr-2">
-            <TouchableOpacity onPress={() => setQuantity(quantity - 1)} disabled={quantity <= 1}>
-              <Text className="text-white text-lg font-bold px-2">−</Text>
-            </TouchableOpacity>
-
-            <Text className="text-white font-semibold mx-2">{quantity}</Text>
-
-            <TouchableOpacity onPress={() => setQuantity(quantity + 1)} disabled={quantity >= 10}>
-              <Text className="text-white text-lg font-bold px-2">+</Text>
-            </TouchableOpacity>
-          </View>
-
-
-        </View>
-
-        {/* LOCATION BOX */}
-        <View className="px-5 pb-6 mt-4">
-          <View className="bg-gray-50 border border-gray-200 rounded-2xl px-4 py-4">
-            <Text className="text-sm font-semibold text-gray-900 text-center">
-              Your Location
-            </Text>
-
-            <View className="mt-3">
-              <Text className="text-xs text-gray-500 text-center">
-                Latitude:
+        {restaurant.menu && restaurant.menu.length > 0 ? (
+          <FlatList
+            data={restaurant.menu}
+            numColumns={2}
+            keyExtractor={(item) => item.id.toString()}
+            columnWrapperStyle={{ justifyContent: 'space-between' }}
+            scrollEnabled={false}
+            renderItem={({ item }) => (
+              <View style={{ width: '48%' }}>
+                <MenuCard
+                  menuItem={item}
+                  onAddToCart={handleAddToCart}
+                />
+              </View>
+            )}
+            ItemSeparatorComponent={() => <View style={{ height: 0 }} />}
+            ListEmptyComponent={
+              <Text className="text-gray-500 text-center py-4">
+                No menu items available
               </Text>
-              <Text className="text-sm text-gray-800 text-center font-medium">
-                {restaurant.latitude.toFixed(4)}
-              </Text>
-            </View>
-
-            <View className="mt-2">
-              <Text className="text-xs text-gray-500 text-center">
-                Longitude:
-              </Text>
-              <Text className="text-sm text-gray-800 text-center font-medium">
-                {restaurant.longitude.toFixed(4)}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-
+            }
+          />
+        ) : (
+          <Text className="text-gray-500 text-center py-4">
+            No menu items available
+          </Text>
+        )}
       </View>
     </View>
   )
