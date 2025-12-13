@@ -26,6 +26,7 @@ A restaurant marketplace application with a mobile frontend (React Native/Expo) 
 - Docker installed (for PostgreSQL database)
 - Expo CLI installed (for mobile app development)
 - Bun runtime (for backend)
+- ngrok (optional, for mobile device testing - see "Connecting Mobile App to Backend" section)
 
 ## Backend Setup
 
@@ -95,6 +96,52 @@ To view and manage database records through a GUI:
 npx prisma studio
 ```
 
+## Connecting Mobile App to Backend
+
+When running the React Native app on a physical device, you need to configure it to connect to your backend server. There are two methods:
+
+#### Step 1: Install ngrok
+
+```bash
+npm install -g ngrok
+```
+
+#### Step 2: Sign up and Get Authtoken
+
+1. Sign up for a free account at [https://dashboard.ngrok.com/signup](https://dashboard.ngrok.com/signup)
+2. Get your authtoken from [https://dashboard.ngrok.com/get-started/your-authtoken](https://dashboard.ngrok.com/get-started/your-authtoken)
+
+#### Step 3: Configure ngrok Authtoken
+
+```bash
+ngrok config add-authtoken <your-authtoken>
+```
+
+Replace `<your-authtoken>` with the token you received from the ngrok dashboard.
+
+#### Step 4: Start ngrok Tunnel
+
+Make sure your backend server is running on port 3000, then start ngrok:
+
+```bash
+ngrok http 3000
+```
+
+This will display a forwarding URL like `https://xxxx-xx-xx-xx-xx.ngrok-free.app`. Copy this URL.
+
+#### Step 5: Configure Frontend Environment
+
+Create a `.env` file in the `frontend` directory:
+
+```bash
+cd frontend
+echo "EXPO_PUBLIC_BACKEND_URL=https://xxxx-xx-xx-xx-xx.ngrok-free.app" > .env
+```
+
+Replace `https://xxxx-xx-xx-xx-xx.ngrok-free.app` with your actual ngrok URL.
+
+**Note:** The ngrok URL changes each time you restart ngrok (unless you have a paid plan with a static domain). You'll need to update the `.env` file if you restart ngrok.
+
 ## Frontend Setup
 
 ### 1. Navigate to Frontend Directory
@@ -109,7 +156,16 @@ cd frontend
 npm install
 ```
 
-### 3. Run the Mobile App
+### 3. Configure Backend URL
+
+Before running the app on a physical device, make sure you've configured the backend URL. See the [Connecting Mobile App to Backend](#connecting-mobile-app-to-backend) section above for detailed instructions.
+
+For emulator/simulator testing, you can use:
+```bash
+echo "EXPO_PUBLIC_BACKEND_URL=http://localhost:3000" > .env
+```
+
+### 4. Run the Mobile App
 
 For Android:
 
