@@ -2,6 +2,16 @@
 
 A restaurant marketplace application with a mobile frontend (React Native/Expo) and a backend API (Node.js/Express) that provides restaurant listings sorted by distance from the user's location.
 
+## Screenshots
+
+<div align="center">
+  <img src="frontend/assets/1.png" alt="Screenshot 1" width="200"/>
+  <img src="frontend/assets/2.png" alt="Screenshot 2" width="200"/>
+  <img src="frontend/assets/3.png" alt="Screenshot 3" width="200"/>
+  <img src="frontend/assets/4.png" alt="Screenshot 4" width="200"/>
+  <img src="frontend/assets/5.png" alt="Screenshot 5" width="200"/>
+</div>
+
 ## Features
 
 - Restaurant listing with distance-based sorting

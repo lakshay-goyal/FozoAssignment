@@ -23,7 +23,7 @@ async function main() {
         tags: ['Indian', 'Spicy', 'Family'],
         latitude: 28.6139,
         longitude: 77.2090,
-        imageUrl: 'https://picsum.photos/seed/rest1/400',
+        imageUrl: 'https://imgs.search.brave.com/M6z_1YeRw0BqFpujy-POa_IzncyqM0hGavwKWrk-Qyw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jb3p5LXJlc3Rh/dXJhbnQtd2l0aC1w/ZW9wbGUtd2FpdGVy/XzE3NTkzNS0yMzAu/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MCZxPTgw',
       },
       {
         name: 'Green Bowl',
@@ -31,7 +31,7 @@ async function main() {
         tags: ['Healthy', 'Veg', 'Salads'],
         latitude: 28.7041,
         longitude: 77.1025,
-        imageUrl: 'https://picsum.photos/seed/rest2/400',
+        imageUrl: 'https://imgs.search.brave.com/sIEvsBsz3HFLabpIiJ7osXSH3WrcRDszGITX0pHyOWo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/Njc2Njc3NzgyMTEt/YjE5ZjVhNGUxZWZl/P2ZtPWpwZyZxPTYw/Jnc9MzAwMCZpeGxp/Yj1yYi00LjEuMCZp/eGlkPU0zd3hNakEz/ZkRCOE1IeHpaV0Z5/WTJoOE1UWjhmSEps/YzNSaGRYSmhiblJ6/ZkdWdWZEQjhmREI4/Zkh3dw',
       },
       {
         name: 'Urban Tadka',
@@ -39,7 +39,7 @@ async function main() {
         tags: ['Street Food', 'Indian'],
         latitude: 19.0760,
         longitude: 72.8777,
-        imageUrl: 'https://picsum.photos/seed/rest3/400',
+        imageUrl: 'https://imgs.search.brave.com/G7ndQ6mwjCfbUODBMeEBSelpf3OSCJ1tw_mU5PIAAqs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vdGhlc2Fu/YW50b25pb3RoaW5n/cy5jb20vd3AtY29u/dGVudC91cGxvYWRz/LzIwMjMvMDgvTmlu/ZXRlZW4tSHlha3Ut/Ni5qcGc_cmVzaXpl/PTIwNDgsMTUzNyZz/c2w9MQ',
       },
       {
         name: 'Pasta Palace',
@@ -47,7 +47,7 @@ async function main() {
         tags: ['Italian', 'Pasta', 'Pizza'],
         latitude: 12.9716,
         longitude: 77.5946,
-        imageUrl: 'https://picsum.photos/seed/rest4/400',
+        imageUrl: 'https://imgs.search.brave.com/R3r0WHnkaxhHDj35SWL5epqL0Gy_w98DIbL5GGACW0I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMucGV4ZWxzLmNv/bS9waG90b3MvNzc2/NTM4L3BleGVscy1w/aG90by03NzY1Mzgu/anBlZz9hdXRvPWNv/bXByZXNzJmNzPXRp/bnlzcmdiJmRwcj0x/Jnc9NTAw',
       },
       {
         name: 'Burger Hub',
@@ -55,7 +55,7 @@ async function main() {
         tags: ['Burgers', 'Fast Food'],
         latitude: 13.0827,
         longitude: 80.2707,
-        imageUrl: 'https://picsum.photos/seed/rest5/400',
+        imageUrl: 'https://imgs.search.brave.com/ikxTbv2BfBV6UrfYt4kE65DFGht63KXIOXV6nnvJH3U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTg0/NTQzMDk0Ni9waG90/by9hYnN0cmFjdC1i/bHVyLWRlZm9jdXMt/Y29mZmVlLXNob3At/Y2FmZS1vci1yZXN0/YXVyYW50LWludGVy/aW9yLWJhY2tncm91/bmQtYmx1cnJlZC1j/YWZlLmpwZz9iPTEm/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9bGpZ/OVNtRHdKMlRrYTVP/WFZHZDcxcHVybjVS/XzhaRGhpVnBpR2Rr/enNWOD0',
       },
       {
         name: 'Sushi Zen',
@@ -63,7 +63,7 @@ async function main() {
         tags: ['Japanese', 'Sushi'],
         latitude: 22.5726,
         longitude: 88.3639,
-        imageUrl: 'https://picsum.photos/seed/rest6/400',
+        imageUrl: 'https://imgs.search.brave.com/kl5SvKC42OZCtKYD5pos6fSmEFAzV96xAQOKOm-s458/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjcv/MTIxLzE2Ny9zbWFs/bC9tb2Rlcm4tcmVz/dGF1cmFudC1pbnRl/cmlvci1mcmVlLXBo/b3RvLmpwZw',
       },
       {
         name: 'Tandoori Flames',
@@ -71,7 +71,7 @@ async function main() {
         tags: ['North Indian', 'Grill'],
         latitude: 26.9124,
         longitude: 75.7873,
-        imageUrl: 'https://picsum.photos/seed/rest7/400',
+        imageUrl: 'https://imgs.search.brave.com/UXtckfYrRJ1lt907S6odWPBYTumZ89Poi4zrCaCJfx0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9yZXNlcnZlZC10/YWJsZS1yZXN0YXVy/YW50XzUzODc2LTIx/OTM4LmpwZz9zZW10/PWFpc19oeWJyaWQm/dz03NDAmcT04MA',
       },
       {
         name: 'Cafe Brew',
@@ -79,7 +79,7 @@ async function main() {
         tags: ['Cafe', 'Coffee', 'Desserts'],
         latitude: 23.0225,
         longitude: 72.5714,
-        imageUrl: 'https://picsum.photos/seed/rest8/400',
+        imageUrl: 'https://imgs.search.brave.com/EmeE7VxzUR9z2mQu2B1Xjgy_ujAiZc3tTnOYqfXYdqw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50aW1lb3V0LmNv/bS9pbWFnZXMvMTA1/ODQzNTg3Lzc1MC81/NjIvaW1hZ2UuanBn',
       },
       {
         name: 'Dragon Wok',
@@ -87,7 +87,7 @@ async function main() {
         tags: ['Chinese', 'Asian'],
         latitude: 18.5204,
         longitude: 73.8567,
-        imageUrl: 'https://picsum.photos/seed/rest9/400',
+        imageUrl: 'https://imgs.search.brave.com/d4JADVRHqLZ8z08s83uoyL4ux3eF__hqbP2ftx_FmfI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjE2/ODQ0ODM3MS9waG90/by9idXNpbmVzcy1w/cm9mZXNzaW9uYWxz/LWF0LWEtcmVzdGF1/cmFudC1oYXZpbmct/ZGlubmVyLndlYnA_/YT0xJmI9MSZzPTYx/Mng2MTImdz0wJms9/MjAmYz1fY2ZnRG12/SS1iZUFPSW1DZXMt/MXA3RWhGbkVhbGFF/SVlnTUlucmctRVdv/PQ',
       },
       {
         name: 'Coastal Catch',
@@ -95,7 +95,7 @@ async function main() {
         tags: ['Seafood', 'Coastal'],
         latitude: 15.2993,
         longitude: 74.1240,
-        imageUrl: 'https://picsum.photos/seed/rest10/400',
+        imageUrl: 'https://imgs.search.brave.com/cEdEHr0uCo7B7uDN7m_KrY96IgNz4MsmL5pvBN_wjIk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS1jZG4udHJpcGFk/dmlzb3IuY29tL21l/ZGlhL3Bob3RvLW8v/MzAvNjAvNWIvZTQv/cmVzdGF1cmFudC5q/cGc',
       },
     ],
   })
@@ -145,7 +145,7 @@ async function main() {
         price: 220,
         restaurantId: allRestaurants[1]!.id,
         description: 'Protein-rich healthy salad',
-        imageUrl: 'https://picsum.photos/seed/menu4/300',
+        imageUrl: 'https://imgs.search.brave.com/e3q5735XR9MZZMyAgs974d42dafOu7zLUTEzYZ9eO7o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9qb3lm/b29kc3Vuc2hpbmUu/Y29tL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIwLzA1L2hvdy10/by1tYWtlLXF1aW5v/YS1zYWxhZC1yZWNp/cGUtMS5qcGc',
         isVeg: true,
       },
       {
@@ -153,7 +153,7 @@ async function main() {
         price: 180,
         restaurantId: allRestaurants[1]!.id,
         description: 'Whole wheat wrap with veggies',
-        imageUrl: 'https://picsum.photos/seed/menu5/300',
+        imageUrl: 'https://imgs.search.brave.com/y_e6Ya64b4mx1LTAjXbzunOpZ0AaCnke7uu3lYLhAsc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTIw/NDE2MzM3NC9waG90/by93cmFwLXNhbmR3/aWNoLXdpdGgtZ3Jp/bGxlZC12ZWdldGFi/bGVzLWFuZC1mZXRh/LWNoZWVzZS1vbi1h/LXBsYXRlLWdyZXkt/YmFja2dyb3VuZC1j/b3B5LXNwYWNlLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1L/X1AxQTVsU281Zzhx/SUtsSFBvYUhKTy1h/VmczcnI5dXh6MG5w/aHRyZUxFPQ',
         isVeg: true,
       },
       {
@@ -161,7 +161,7 @@ async function main() {
         price: 150,
         restaurantId: allRestaurants[1]!.id,
         description: 'Fresh seasonal fruits blend',
-        imageUrl: 'https://picsum.photos/seed/menu6/300',
+        imageUrl: 'https://imgs.search.brave.com/hCVMqmcP3BELzgaz6w0hn-e5O0-9ImcyF4kTpi6pX3c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjkv/NTUxLzczNS9zbWFs/bC9zZXQtb2YtZnJ1/aXQtc21vb3RoaWVz/LWhlYWx0aHktZnJ1/aXQtYW5kLXZlZ2V0/YWJsZS1zbW9vdGhp/ZXMtZ2VuZXJhdGl2/ZS1haS1mcmVlLXBo/b3RvLmpwZw',
         isVeg: true,
       },
       // Restaurant 3 (Urban Tadka)
