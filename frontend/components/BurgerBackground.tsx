@@ -24,7 +24,7 @@ export function BurgerBackground({ hideLogo = false }: BurgerBackgroundProps) {
             className="w-32 h-16"
             resizeMode="contain"
           />
-          <Text className="font-sans font-semibold text-gray-300 mt-2 tracking-wider text-base">
+          <Text className="font-inter font-bold text-gray-300 mt-2 tracking-wider text-base">
             Fast delivery at your doorstep
           </Text>
         </View>

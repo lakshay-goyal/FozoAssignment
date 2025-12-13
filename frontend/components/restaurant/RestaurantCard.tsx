@@ -1,5 +1,7 @@
 import { TouchableOpacity, View, Text, Image } from 'react-native'
+import { Heart, Truck, Clock } from 'lucide-react-native'
 import type { RestaurantWithDistance } from '../../types/restaurant.types'
+import { fontFamily } from '../../fonts'
 
 interface RestaurantCardProps {
   restaurant: RestaurantWithDistance
@@ -7,48 +9,110 @@ interface RestaurantCardProps {
 }
 
 export const RestaurantCard = ({ restaurant, onPress }: RestaurantCardProps) => {
-  const visibleTags = restaurant.tags?.slice(0, 2) || []
-
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.85}
-      className="mb-6 bg-white rounded-2xl overflow-hidden shadow-sm"
+      className="bg-white rounded-[15px] overflow-hidden"
+      style={{
+        width: 266,
+        height: 203,
+        shadowColor: '#D3D1D8',
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 30,
+        elevation: 5,
+      }}
     >
-      <View className="h-44 bg-gray-200 justify-center items-center">
-        <Image source={{ uri: restaurant.imageUrl || '' }} className="w-full h-full object-contain" />
+      {/* Image with Heart Icon */}
+      <View className="relative" style={{ height: 136 }}>
+        <Image
+          source={{ uri: restaurant.imageUrl || 'https://via.placeholder.com/266x136' }}
+          className="w-full h-full"
+          resizeMode="cover"
+        />
+        <TouchableOpacity
+          className="absolute top-2 right-2 w-8 h-8 rounded-full items-center justify-center"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.3)',
+            shadowColor: '#FE724C',
+            shadowOffset: { width: 0, height: 7 },
+            shadowOpacity: 0.4,
+            shadowRadius: 15,
+            elevation: 5,
+          }}
+        >
+          <Heart size={16} color="#FFFFFF" fill="#FFFFFF" />
+        </TouchableOpacity>
       </View>
 
-      <View className="p-4">
-        <View className="flex-row justify-between items-start mb-1">
-          <Text className="font-sans text-lg font-bold text-black flex-1 mr-2">
+      {/* Content */}
+      <View className="p-3 flex-1 justify-between">
+        {/* Header with Name and Rating */}
+        <View className="flex-row justify-between items-center mb-1">
+          <Text
+            style={{
+              fontFamily: fontFamily.semiBold,
+              fontSize: 15,
+              lineHeight: 22,
+            }}
+            className="text-[#242731] flex-1"
+            numberOfLines={1}
+          >
             {restaurant.name}
           </Text>
-          <View className="bg-orange-100 px-3 py-1 rounded-full">
-            <Text className="font-sans text-xs text-orange-600 font-semibold">
-              {restaurant.distance} km
+          <View className="flex-row items-center gap-1">
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: 10,
+                lineHeight: 12,
+              }}
+              className="text-[#242731]"
+            >
+              ⭐
+            </Text>
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: 10,
+                lineHeight: 12,
+              }}
+              className="text-[#242731]"
+            >
+              4.5
             </Text>
           </View>
         </View>
 
-        {restaurant.description && (
-          <Text
-            className="font-sans text-sm text-gray-500 mb-3"
-            numberOfLines={2}
-          >
-            {restaurant.description}
-          </Text>
-        )}
-
-        <View className="flex-row gap-2">
-          {visibleTags.map((tag, index) => (
-            <View
-              key={index}
-              className="bg-gray-100 px-3 py-1 rounded-full"
+        {/* Delivery Info */}
+        <View className="flex-row items-center gap-3">
+          <View className="flex-row items-center gap-1">
+            <Truck size={14} color="#FF6B57" />
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: 12,
+                lineHeight: 14,
+              }}
+              className="text-[#7E8392]"
             >
-              <Text className="font-sans text-xs text-gray-700">{tag}</Text>
-            </View>
-          ))}
+              {restaurant.distance} km
+            </Text>
+          </View>
+          <View className="flex-row items-center gap-1">
+            <Clock size={14} color="#FF6B57" />
+            <Text
+              style={{
+                fontFamily: fontFamily.regular,
+                fontSize: 12,
+                lineHeight: 14,
+              }}
+              className="text-[#7E8392]"
+            >
+              45 mins
+            </Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
