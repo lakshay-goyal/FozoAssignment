@@ -12,19 +12,27 @@ import { MenuCard } from "./MenuCard"
 interface RestaurantDetailProps {
   restaurant: RestaurantWithDistance
   onBackPress: () => void
+  onMenuItemPress?: (menuItem: MenuItem) => void
 }
 
 export const RestaurantDetail = ({
   restaurant,
   onBackPress,
+  onMenuItemPress,
 }: RestaurantDetailProps) => {
   const handleAddToCart = (menuItem: MenuItem) => {
-    // TODO: Implement add to cart functionality
-    console.log('Add to cart:', menuItem)
+    // If onMenuItemPress is provided, use it to open bottom sheet
+    // Otherwise, use the old add to cart functionality
+    if (onMenuItemPress) {
+      onMenuItemPress(menuItem)
+    } else {
+      // TODO: Implement add to cart functionality
+      console.log('Add to cart:', menuItem)
+    }
   }
 
   return (
-    <View className="flex-1 bg-[#FAFAFA]">
+    <View className="flex-1 bg-white">
       {/* HEADER */}
       <View className="flex-row items-center justify-between px-5 pt-4 mb-4">
         <TouchableOpacity onPress={onBackPress} activeOpacity={0.7}>
@@ -91,7 +99,7 @@ export const RestaurantDetail = ({
               <View style={{ width: '48%' }}>
                 <MenuCard
                   menuItem={item}
-                  onAddToCart={handleAddToCart}
+                  onPress={() => onMenuItemPress?.(item)}
                 />
               </View>
             )}

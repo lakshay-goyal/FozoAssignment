@@ -4,12 +4,16 @@ import { ShoppingCart } from 'lucide-react-native'
 
 interface MenuCardProps {
   menuItem: MenuItem
-  onAddToCart: (menuItem: MenuItem) => void
+  onPress?: () => void
 }
 
-export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
+export const MenuCard = ({ menuItem, onPress }: MenuCardProps) => {
   return (
-    <View className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-4">
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.8}
+      className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 mb-4"
+    >
       {/* IMAGE */}
       <View className="h-40 bg-gray-200">
         {menuItem.imageUrl ? (
@@ -63,17 +67,8 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
           <Text className="font-sans text-sm font-semibold text-[#F97316]">
             ₹{menuItem.price.toFixed(2)}
           </Text>
-
-          <TouchableOpacity
-            onPress={() => onAddToCart(menuItem)}
-            activeOpacity={0.8}
-            className="bg-[#F97316] px-3 py-1 rounded-xl flex-row items-center gap-2"
-          >
-            <ShoppingCart size={16} color="#FFFFFF" />
-            <Text className="font-sans text-white font-semibold text-sm">Add</Text>
-          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }

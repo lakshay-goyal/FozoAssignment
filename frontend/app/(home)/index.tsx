@@ -22,6 +22,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import { Menu, Bell, ShoppingCart, User, Home, Heart, Clock, Truck } from 'lucide-react-native'
 import { RestaurantCard } from '../../components/restaurant/RestaurantCard'
+import { ProfilePopup } from '../../components/ProfilePopup'
 import { restaurantService } from '../../services/restaurant.service'
 import { userService } from '../../services/user.service'
 import type { RestaurantWithDistance } from '../../types/restaurant.types'
@@ -137,6 +138,7 @@ export default function Page() {
   const [searchQuery, setSearchQuery] = useState('')
   const [userAddress, setUserAddress] = useState<string>('387 Merdina')
   const [selectedCategory, setSelectedCategory] = useState('Pizza')
+  const [showProfilePopup, setShowProfilePopup] = useState(false)
 
   const scrollRef = useRef<ScrollView>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -324,6 +326,7 @@ export default function Page() {
               <View className="relative">
                 <TouchableOpacity
                   className="w-10 h-10 rounded-[10px] overflow-hidden"
+                  onPress={() => setShowProfilePopup(true)}
                   style={{
                     shadowColor: '#D3D1D8',
                     shadowOffset: { width: 5, height: 10 },
@@ -639,6 +642,12 @@ export default function Page() {
           </Link>
         </View>
       </SignedOut>
+
+      {/* Profile Popup */}
+      <ProfilePopup
+        visible={showProfilePopup}
+        onClose={() => setShowProfilePopup(false)}
+      />
     </View>
   )
 }

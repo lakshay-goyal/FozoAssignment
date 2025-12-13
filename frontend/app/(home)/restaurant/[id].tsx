@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useUser } from '@clerk/clerk-expo'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { restaurantService } from '../../../services/restaurant.service'
-import type { RestaurantWithDistance } from '../../../types/restaurant.types'
+import type { RestaurantWithDistance, MenuItem } from '../../../types/restaurant.types'
 import { RestaurantDetail } from '../../../components/restaurant/RestaurantDetail'
+import { RestaurantDetailBottomSheet } from '../../../components/restaurant/RestaurantDetailBottomSheet'
 
 export default function RestaurantDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -13,6 +15,7 @@ export default function RestaurantDetailScreen() {
   const [restaurant, setRestaurant] = useState<RestaurantWithDistance | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(null)
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -59,14 +62,34 @@ export default function RestaurantDetailScreen() {
     )
   }
 
+  const handleMenuItemPress = (menuItem: MenuItem) => {
+    setSelectedMenuItem(menuItem)
+  }
+
+  const handleCloseBottomSheet = () => {
+    setSelectedMenuItem(null)
+  }
+
   return (
-    <ScrollView className="flex-1 bg-[#FAFAFA]">
-      <View className="p-6">
-        <RestaurantDetail
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ScrollView className="flex-1 bg-white">
+        <View className="p-6">
+          <RestaurantDetail
+            restaurant={restaurant}
+            onBackPress={() => router.back()}
+            onMenuItemPress={handleMenuItemPress}
+          />
+        </View>
+      </ScrollView>
+
+      {/* Bottom Sheet */}
+      {selectedMenuItem && (
+        <RestaurantDetailBottomSheet
           restaurant={restaurant}
-          onBackPress={() => router.back()}
+          menuItem={selectedMenuItem}
+          onClose={handleCloseBottomSheet}
         />
-      </View>
-    </ScrollView>
+      )}
+    </GestureHandlerRootView>
   )
 }
