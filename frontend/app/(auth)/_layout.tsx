@@ -11,9 +11,9 @@ export default function AuthRoutesLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="sign-up" />
       </Stack>
     </GestureHandlerRootView>
   )
