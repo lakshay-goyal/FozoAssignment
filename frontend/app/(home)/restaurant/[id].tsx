@@ -40,7 +40,7 @@ export default function RestaurantDetailScreen() {
     return (
       <View className="flex-1 bg-[#FFF0DA] items-center justify-center">
         <ActivityIndicator size="large" color="#C83A1A" />
-        <Text className="mt-4 text-gray-600">Loading restaurant details...</Text>
+        <Text className="font-sans mt-4 text-gray-600">Loading restaurant details...</Text>
       </View>
     )
   }
@@ -48,12 +48,12 @@ export default function RestaurantDetailScreen() {
   if (error || !restaurant) {
     return (
       <View className="flex-1 bg-[#FFF0DA] items-center justify-center px-4">
-        <Text className="text-red-500 text-lg mb-4 text-center">{error || 'Restaurant not found'}</Text>
+        <Text className="font-sans text-red-500 text-lg mb-4 text-center">{error || 'Restaurant not found'}</Text>
         <TouchableOpacity
           onPress={() => router.back()}
           className="bg-[#C83A1A] rounded-xl py-3 px-6"
         >
-          <Text className="text-white font-semibold">Go Back</Text>
+          <Text className="font-sans text-white font-semibold">Go Back</Text>
         </TouchableOpacity>
       </View>
     )

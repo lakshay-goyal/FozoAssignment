@@ -21,11 +21,11 @@ export const RestaurantCard = ({ restaurant, onPress }: RestaurantCardProps) => 
 
       <View className="p-4">
         <View className="flex-row justify-between items-start mb-1">
-          <Text className="text-lg font-bold text-black flex-1 mr-2">
+          <Text className="font-sans text-lg font-bold text-black flex-1 mr-2">
             {restaurant.name}
           </Text>
           <View className="bg-orange-100 px-3 py-1 rounded-full">
-            <Text className="text-xs text-orange-600 font-semibold">
+            <Text className="font-sans text-xs text-orange-600 font-semibold">
               {restaurant.distance} km
             </Text>
           </View>
@@ -33,7 +33,7 @@ export const RestaurantCard = ({ restaurant, onPress }: RestaurantCardProps) => 
 
         {restaurant.description && (
           <Text
-            className="text-sm text-gray-500 mb-3"
+            className="font-sans text-sm text-gray-500 mb-3"
             numberOfLines={2}
           >
             {restaurant.description}
@@ -46,7 +46,7 @@ export const RestaurantCard = ({ restaurant, onPress }: RestaurantCardProps) => 
               key={index}
               className="bg-gray-100 px-3 py-1 rounded-full"
             >
-              <Text className="text-xs text-gray-700">{tag}</Text>
+              <Text className="font-sans text-xs text-gray-700">{tag}</Text>
             </View>
           ))}
         </View>

@@ -44,14 +44,14 @@ export default function Page() {
     <View className="flex-1 bg-[#D6EE72]">
       {/* Background */}
       <View className="flex-1">
-        <BurgerBackground hideLogo={isDragging} />
+        <BurgerBackground />
       </View>
 
       {/* Sign-In-Form */}
       <DraggableCard title="Sign in to continue" onDragStateChange={setIsDragging}>
         {error ? (
           <View className="bg-red-100 border border-red-300 rounded-xl p-3 mb-4 w-full">
-            <Text className="text-red-700 text-sm">{error}</Text>
+            <Text className="font-sans text-red-700 text-sm">{error}</Text>
           </View>
         ) : null}
 
@@ -78,9 +78,9 @@ export default function Page() {
         <Button title="Sign in" onPress={onSignInPress} />
 
         <View className="flex-row justify-center">
-          <Text className="text-gray-700">Don't have an account? </Text>
+          <Text className="font-sans text-gray-700">Don't have an account? </Text>
           <Link href="./sign-up">
-            <Text className="font-semibold text-gray-900">Sign up</Text>
+            <Text className="font-sans font-bold text-gray-900">Sign up</Text>
           </Link>
         </View>
       </DraggableCard>

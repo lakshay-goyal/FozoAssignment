@@ -20,7 +20,7 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
           />
         ) : (
           <View className="w-full h-full justify-center items-center bg-gray-100">
-            <Text className="text-gray-400 text-sm">No Image</Text>
+            <Text className="font-sans text-gray-400 text-sm">No Image</Text>
           </View>
         )}
       </View>
@@ -42,7 +42,7 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
             />
           </View>
 
-          <Text className="text-lg font-bold text-black flex-1" numberOfLines={1}>
+          <Text className="font-sans text-lg font-bold text-black flex-1" numberOfLines={1}>
             {menuItem.item_name}
           </Text>
         </View>
@@ -51,7 +51,7 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
         {/* DESCRIPTION */}
         {menuItem.description && (
           <Text
-            className="text-sm text-gray-600 mb-3"
+            className="font-sans text-sm text-gray-600 mb-3"
             numberOfLines={2}
           >
             {menuItem.description}
@@ -60,7 +60,7 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
 
         {/* PRICE AND ADD TO CART */}
         <View className="flex-row items-center justify-between mt-auto gap-1">
-          <Text className="text-sm font-semibold text-[#F97316]">
+          <Text className="font-sans text-sm font-semibold text-[#F97316]">
             ₹{menuItem.price.toFixed(2)}
           </Text>
 
@@ -70,7 +70,7 @@ export const MenuCard = ({ menuItem, onAddToCart }: MenuCardProps) => {
             className="bg-[#F97316] px-3 py-1 rounded-xl flex-row items-center gap-2"
           >
             <ShoppingCart size={16} color="#FFFFFF" />
-            <Text className="text-white font-semibold text-sm">Add</Text>
+            <Text className="font-sans text-white font-semibold text-sm">Add</Text>
           </TouchableOpacity>
         </View>
       </View>

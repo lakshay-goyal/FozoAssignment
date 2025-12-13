@@ -31,7 +31,7 @@ export const RestaurantDetail = ({
           <ArrowLeft size={24} color="#111" />
         </TouchableOpacity>
 
-        <Text className="text-lg font-semibold text-black">Details</Text>
+        <Text className="font-sans text-lg font-semibold text-black">Details</Text>
 
         <TouchableOpacity activeOpacity={0.7}>
           <Heart size={22} color="#111" />
@@ -49,13 +49,13 @@ export const RestaurantDetail = ({
 
       {/* TITLE + CALORIES */}
       <View className="px-5 flex-row items-center justify-between mb-2">
-        <Text className="text-2xl font-bold text-black">
+        <Text className="font-sans text-2xl font-bold text-black">
           {restaurant.name}
         </Text>
 
         <View className="flex-row items-center gap-1">
           <Flame size={16} color="#F97316" />
-          <Text className="text-sm font-medium text-gray-700">
+          <Text className="font-sans text-sm font-medium text-gray-700">
             {restaurant.tags.join(', ')}
           </Text>
         </View>
@@ -63,21 +63,21 @@ export const RestaurantDetail = ({
 
       {/* DELIVERY INFO */}
       <View className="px-5 mb-4">
-        <Text className="text-[#F97316] font-semibold">
+        <Text className="font-sans text-[#F97316] font-semibold">
           {restaurant.distance} km away from you
         </Text>
       </View>
 
       {/* DESCRIPTION */}
       <View className="px-5 mb-6">
-        <Text className="text-gray-700 leading-6">
+        <Text className="font-sans text-gray-700 leading-6">
           {restaurant.description}
         </Text>
       </View>
 
       {/* MENU */}
       <View className="px-5 mb-6">
-        <Text className="text-xl font-bold text-black mb-4">
+        <Text className="font-sans text-xl font-bold text-black mb-4">
           Menu
         </Text>
         {restaurant.menu && restaurant.menu.length > 0 ? (
@@ -97,13 +97,13 @@ export const RestaurantDetail = ({
             )}
             ItemSeparatorComponent={() => <View style={{ height: 0 }} />}
             ListEmptyComponent={
-              <Text className="text-gray-500 text-center py-4">
+              <Text className="font-sans text-gray-500 text-center py-4">
                 No menu items available
               </Text>
             }
           />
         ) : (
-          <Text className="text-gray-500 text-center py-4">
+          <Text className="font-sans text-gray-500 text-center py-4">
             No menu items available
           </Text>
         )}

@@ -17,6 +17,7 @@ import { RestaurantCard } from '../../components/restaurant/RestaurantCard'
 import { restaurantService } from '../../services/restaurant.service'
 import { userService } from '../../services/user.service'
 import type { RestaurantWithDistance } from '../../types/restaurant.types'
+import { fontFamily } from '../../fonts'
 
 const { width: screenWidth } = Dimensions.get('window')
 
@@ -142,8 +143,8 @@ export default function Page() {
         <View className="px-6 pt-6 pb-4">
           <View className="flex-row justify-between items-center mb-4">
             <View className="flex-1 mr-3">
-              <Text className="text-xs text-gray-500">Your location</Text>
-              <Text className="text-base font-semibold text-black" numberOfLines={1} ellipsizeMode="tail">
+              <Text className="font-sans text-xs text-gray-500">Your location</Text>
+              <Text className="font-sans text-base font-semibold text-black" numberOfLines={1} ellipsizeMode="tail">
                 {userAddress} ▼
               </Text>
             </View>
@@ -152,16 +153,17 @@ export default function Page() {
             </View>
           </View>
           <View className="flex-row items-center bg-white rounded-full px-4 py-3 shadow-sm">
-            <Text className="text-gray-400 mr-2">🔍</Text>
+            <Text className="font-sans text-gray-400 mr-2">🔍</Text>
             <TextInput
               placeholder="Type to search"
               placeholderTextColor="#9CA3AF"
+              style={{ fontFamily: fontFamily.regular }}
               className="flex-1 text-sm text-black"
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
             <View className="bg-orange-100 px-3 py-1 rounded-full">
-              <Text className="text-xs text-orange-500 font-semibold">
+              <Text className="font-sans text-xs text-orange-500 font-semibold">
                 Now
               </Text>
             </View>
@@ -193,14 +195,14 @@ export default function Page() {
                   paddingHorizontal: 20,
                 }}
               >
-                <Text className="text-white text-xs mb-2">
-                  Use code <Text className="font-bold">{banner.code}</Text> at checkout
+                <Text className="font-sans text-white text-xs mb-2">
+                  Use code <Text className="font-sans font-bold">{banner.code}</Text> at checkout
                 </Text>
-                <Text className="text-white text-2xl font-bold mb-6">
+                <Text className="font-sans text-white text-2xl font-bold mb-6">
                   {banner.title}
                 </Text>
                 <TouchableOpacity className="bg-black self-start px-5 py-2 rounded-full">
-                  <Text className="text-white font-semibold text-sm">Order Now</Text>
+                  <Text className="font-sans text-white font-semibold text-sm">Order Now</Text>
                 </TouchableOpacity>
               </View>
             )
@@ -212,16 +214,16 @@ export default function Page() {
         {loading && !refreshing ? (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator size="large" color="#F05A28" />
-            <Text className="mt-3 text-gray-500">Loading restaurants...</Text>
+            <Text className="font-sans mt-3 text-gray-500">Loading restaurants...</Text>
           </View>
         ) : error ? (
           <View className="flex-1 justify-center items-center px-6">
-            <Text className="text-red-500 text-center mb-4">{error}</Text>
+            <Text className="font-sans text-red-500 text-center mb-4">{error}</Text>
             <TouchableOpacity
               onPress={fetchRestaurants}
               className="bg-[#F05A28] px-6 py-3 rounded-full"
             >
-              <Text className="text-white font-semibold">Retry</Text>
+              <Text className="font-sans text-white font-semibold">Retry</Text>
             </TouchableOpacity>
           </View>
         ) : (
@@ -236,17 +238,17 @@ export default function Page() {
             }
           >
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-lg font-bold text-black">
+              <Text className="font-sans text-lg font-bold text-black">
                 {searchQuery ? `Search Results (${filteredRestaurants.length})` : 'Popular Food'}
               </Text>
               {!searchQuery && (
-                <Text className="text-sm text-orange-500 font-semibold">See All</Text>
+                <Text className="font-sans text-sm text-orange-500 font-semibold">See All</Text>
               )}
             </View>
 
             {filteredRestaurants.length === 0 && searchQuery ? (
               <View className="py-8 items-center">
-                <Text className="text-gray-500 text-center">
+                <Text className="font-sans text-gray-500 text-center">
                   No restaurants found matching "{searchQuery}"
                 </Text>
               </View>
@@ -269,7 +271,7 @@ export default function Page() {
       <SignedOut>
         <View className="flex-1 justify-center items-center">
           <Link href="../sign-in">
-            <Text className="text-[#F05A28] text-lg font-semibold">Sign in</Text>
+            <Text className="font-sans text-[#F05A28] text-lg font-semibold">Sign in</Text>
           </Link>
         </View>
       </SignedOut>

@@ -10,8 +10,8 @@ import Animated, {
 
 const { height } = Dimensions.get('window')
 
-const MIN_HEIGHT = height * 0.5
-const MAX_HEIGHT = height
+const MIN_HEIGHT = height * 0.6
+const MAX_HEIGHT = height * 0.85
 
 interface DraggableCardProps {
   children: React.ReactNode
@@ -83,18 +83,16 @@ export function DraggableCard({ children, title, onDragStateChange }: DraggableC
         style={animatedStyle}
         className="absolute bottom-0 w-full bg-white rounded-t-3xl px-6 pb-8 pt-6"
       >
-        <ScrollView 
-          className="flex-1" 
+        <View className="w-10 h-1 bg-gray-400 rounded-full self-center mb-4 top-1" />
+        <ScrollView
+          className="flex-1"
           contentContainerStyle={isExpanded && !isKeyboardVisible ? { flexGrow: 1, justifyContent: 'center' } : { flexGrow: 0 }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {!isExpanded && (
-            <View className="w-10 h-1 bg-gray-400 rounded-full self-center mb-4" />
-          )}
 
           {title && (
-            <Text className="text-xl font-bold text-center mb-6 text-gray-800">
+            <Text className="font-sans text-xl font-bold text-center mb-6 text-gray-800">
               {title}
             </Text>
           )}

@@ -15,7 +15,17 @@ module.exports = {
         },
       },
       fontFamily: {
-        'cursive': ['cursive'], // You can add a custom font later if needed
+        sans: ['Inter_400Regular', 'sans-serif'],
+        thin: ['Inter_100Thin', 'sans-serif'],
+        'extra-light': ['Inter_200ExtraLight', 'sans-serif'],
+        light: ['Inter_300Light', 'sans-serif'],
+        regular: ['Inter_400Regular', 'sans-serif'],
+        medium: ['Inter_500Medium', 'sans-serif'],
+        'semi-bold': ['Inter_600SemiBold', 'sans-serif'],
+        bold: ['Inter_700Bold', 'sans-serif'],
+        'extra-bold': ['Inter_800ExtraBold', 'sans-serif'],
+        black: ['Inter_900Black', 'sans-serif'],
+        cursive: ['cursive'],
       },
     },
   },

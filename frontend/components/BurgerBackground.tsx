@@ -17,14 +17,14 @@ export function BurgerBackground({ hideLogo = false }: BurgerBackgroundProps) {
       {!hideLogo && (
         <View 
           className="absolute left-0 right-0 items-center justify-center top-36 opacity-100"
-          style={{ zIndex: 10 }}
+          style={{ zIndex: 5 }}
         >
           <Image
             source={{ uri: "https://getfozo.in/brand-full.png" }}
             className="w-32 h-16"
             resizeMode="contain"
           />
-          <Text className="font-semibold text-gray-300 mt-2 tracking-wider text-base">
+          <Text className="font-sans font-semibold text-gray-300 mt-2 tracking-wider text-base">
             Fast delivery at your doorstep
           </Text>
         </View>
@@ -37,8 +37,8 @@ export function BurgerBackground({ hideLogo = false }: BurgerBackgroundProps) {
           width: BURGER_SIZE,
           height: BURGER_SIZE,
           position: 'absolute',
-          top: 200,
-          left: -BURGER_SIZE * 0.30,
+          top: 150,
+          left: -BURGER_SIZE * 0.40,
         }}
       />
 
@@ -49,7 +49,7 @@ export function BurgerBackground({ hideLogo = false }: BurgerBackgroundProps) {
           width: BURGER_SIZE,
           height: BURGER_SIZE,
           position: 'absolute',
-          top: 300,
+          top: 220,
           right: -BURGER_SIZE * 0.40,
         }}
       />
