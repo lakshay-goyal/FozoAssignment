@@ -54,11 +54,10 @@ export function DraggableCard({ children, title }: DraggableCardProps) {
     <GestureDetector gesture={panGesture}>
       <Animated.View
         style={animatedStyle}
-        className={`absolute bottom-0 w-full bg-white rounded-t-3xl px-6 pb-8 ${
-          isExpanded ? 'justify-center' : 'pt-6'
-        }`}
+        className={`absolute bottom-0 w-full bg-white rounded-t-3xl px-6 pb-8 ${isExpanded ? 'justify-center' : 'pt-6'
+          }`}
       >
-        <View className={isExpanded ? 'items-center' : ''}>
+        <View>
           {!isExpanded && (
             <View className="w-10 h-1 bg-gray-400 rounded-full self-center mb-4" />
           )}
@@ -69,8 +68,11 @@ export function DraggableCard({ children, title }: DraggableCardProps) {
             </Text>
           )}
 
-          {children}
+          <View className="w-full">
+            {children}
+          </View>
         </View>
+
       </Animated.View>
     </GestureDetector>
   )
