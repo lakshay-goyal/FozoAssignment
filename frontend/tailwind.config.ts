@@ -6,7 +6,18 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'fozo': {
+          'primary': '#EDFFA9',
+          'light': '#EDFFA9',
+          'dark': '#D6EE72',
+        },
+      },
+      fontFamily: {
+        'cursive': ['cursive'], // You can add a custom font later if needed
+      },
+    },
   },
   plugins: [],
 }
