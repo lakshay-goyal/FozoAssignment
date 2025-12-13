@@ -6,6 +6,7 @@ import {
 } from "react-native"
 import { Heart, ArrowLeft, Flame } from "lucide-react-native"
 import type { RestaurantWithDistance } from "../../types/restaurant.types"
+import { useState } from "react"
 
 interface RestaurantDetailProps {
   restaurant: RestaurantWithDistance
@@ -16,6 +17,7 @@ export const RestaurantDetail = ({
   restaurant,
   onBackPress,
 }: RestaurantDetailProps) => {
+  const [quantity, setQuantity] = useState(1)
   return (
     <View className="flex-1 bg-[#FAFAFA]">
       {/* HEADER */}
@@ -82,11 +84,10 @@ export const RestaurantDetail = ({
           >
             <View className="flex-row items-center gap-3">
               <View
-                className={`w-5 h-5 rounded-full border ${
-                  item
-                    ? "bg-[#F97316] border-[#F97316]"
-                    : "border-gray-400"
-                }`} />
+                className={`w-5 h-5 rounded-full border ${item
+                  ? "bg-[#F97316] border-[#F97316]"
+                  : "border-gray-400"
+                  }`} />
               <Text className="text-base text-black">{item.toUpperCase()}</Text>
             </View>
           </TouchableOpacity>
@@ -106,17 +107,48 @@ export const RestaurantDetail = ({
           </TouchableOpacity>
 
           <View className="flex-row items-center bg-[#E86512] px-4 py-2 rounded-xl mr-2">
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setQuantity(quantity - 1)} disabled={quantity <= 1}>
               <Text className="text-white text-lg font-bold px-2">−</Text>
             </TouchableOpacity>
 
-            <Text className="text-white font-semibold mx-2">1</Text>
+            <Text className="text-white font-semibold mx-2">{quantity}</Text>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setQuantity(quantity + 1)} disabled={quantity >= 10}>
               <Text className="text-white text-lg font-bold px-2">+</Text>
             </TouchableOpacity>
           </View>
+
+
         </View>
+
+        {/* LOCATION BOX */}
+        <View className="px-5 pb-6 mt-4">
+          <View className="bg-gray-50 border border-gray-200 rounded-2xl px-4 py-4">
+            <Text className="text-sm font-semibold text-gray-900 text-center">
+              Your Location
+            </Text>
+
+            <View className="mt-3">
+              <Text className="text-xs text-gray-500 text-center">
+                Latitude:
+              </Text>
+              <Text className="text-sm text-gray-800 text-center font-medium">
+                {restaurant.latitude.toFixed(4)}
+              </Text>
+            </View>
+
+            <View className="mt-2">
+              <Text className="text-xs text-gray-500 text-center">
+                Longitude:
+              </Text>
+              <Text className="text-sm text-gray-800 text-center font-medium">
+                {restaurant.longitude.toFixed(4)}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+
       </View>
     </View>
   )
