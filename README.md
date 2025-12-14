@@ -23,7 +23,9 @@ A restaurant marketplace application with a mobile frontend (React Native/Expo) 
 ## Features
 
 - Restaurant listing with distance-based sorting
+- Multiple location selection (save and switch between multiple addresses)
 - Real-time distance calculation using Haversine formula
+- Location autocomplete with debouncing and caching
 - Restaurant detail pages with menu items
 - User authentication and location tracking
 - Backend-sorted restaurant results
@@ -193,37 +195,104 @@ npm run ios
 
 The backend provides the following REST endpoints:
 
-- `POST /restaurants` - Fetch all restaurants sorted by distance
-- `POST /restaurants/:restaurantId` - Fetch a specific restaurant by ID
 - `POST /users` - Create a new user account
+- `POST /restaurants` - Fetch all restaurants sorted by distance (accepts optional latitude/longitude for selected address)
+- `POST /restaurants/:restaurantId` - Fetch a specific restaurant by ID (accepts optional latitude/longitude for selected address)
+- `GET /location/autocomplete?input={query}` - Get location suggestions with debouncing and caching
+- `GET /location/reverse-geocode?lat={lat}&lng={lng}` - Reverse geocode coordinates to address
+- `POST /addresses` - Create a new saved address
+- `POST /addresses/list` - Get all saved addresses for a user (with optional distance calculation from current location)
+- `PUT /addresses/:addressId` - Update a saved address
+- `DELETE /addresses/:addressId` - Delete a saved address
 
-### Restaurant Listing Logic
+## Multiple Location Selection Architecture
 
-The restaurant listing endpoint processes requests as follows:
+The application supports multiple saved addresses and allows users to select different locations for restaurant distance calculations. This feature enables users to view restaurants sorted by distance from any saved address or their current location.
 
-1. **Request Processing**: The endpoint receives a username in the request body to identify the user.
+### Location Selection Flow
 
-2. **User Location Retrieval**: The system queries the database to fetch the user's stored latitude and longitude coordinates.
+1. **Address Context Management**: The application uses React Context (`AddressContext`) to manage the currently selected address across the entire application. The context provides:
+   - `selectedAddress`: The currently selected address object (or null if using default location)
+   - `setSelectedAddress`: Function to update the selected address
 
-3. **Restaurant Data Fetching**: All restaurants are retrieved from the database along with their associated menu items.
+2. **Address Storage**: Users can save multiple addresses in the database, each with:
+   - Label (e.g., "Home", "Work")
+   - Full address string
+   - Latitude and longitude coordinates
+   - Optional phone number
+   - Default address flag
 
-4. **Distance Calculation**: For each restaurant, the Haversine formula is applied to calculate the distance between the user's location and the restaurant's location. The distance is computed in kilometers.
+3. **Location Selection Options**: Users can select a location through the `LocationSelectorModal` component, which provides three options:
+   - **Saved Addresses**: Select from previously saved addresses
+   - **Current Location**: Use device GPS location (temporary, not saved)
+   - **Search and Add**: Search for new locations and save them as addresses
 
-5. **Distance Sorting**: All restaurants are sorted in ascending order based on their calculated distance from the user's location. The nearest restaurant appears first in the results.
+### Restaurant Distance Calculation for Selected Location
 
-6. **Response Formatting**: The sorted list of restaurants, each including its calculated distance, is returned to the client in a standardized API response format.
+When a user selects a location (saved address or current location), the restaurant listing is recalculated based on that location:
 
-### Restaurant Detail Logic
+1. **Location Selection**: When a user selects an address from the location selector modal, the `setSelectedAddress` function updates the global address context with the selected address coordinates.
 
-The restaurant detail endpoint follows a similar pattern:
+2. **Restaurant Fetching**: The `useRestaurants` hook monitors the `selectedAddress` from the context. When the selected address changes, it automatically triggers a new restaurant fetch.
 
-1. **Request Validation**: Validates that both username and restaurant ID are provided.
+3. **Coordinate Passing**: The hook passes the selected address coordinates (latitude and longitude) to the backend API when making the restaurant request:
+   - If `selectedAddress` exists: Uses `selectedAddress.latitude` and `selectedAddress.longitude`
+   - If `selectedAddress` is null: Uses the user's default location from the database
 
-2. **User and Restaurant Lookup**: Fetches the user's location and the requested restaurant data from the database.
+4. **Backend Processing**: The backend restaurant endpoint (`POST /restaurants`) receives the coordinates:
+   - If coordinates are provided: Uses them directly for distance calculation
+   - If coordinates are not provided: Fetches the user's default location from the database
 
-3. **Distance Calculation**: Calculates the distance between the user and the specific restaurant using the Haversine formula.
+5. **Distance Calculation**: For each restaurant, the backend calculates the distance using the Haversine formula between:
+   - The selected location coordinates (or default user location)
+   - Each restaurant's coordinates
 
-4. **Response**: Returns the restaurant details including menu items and the calculated distance.
+6. **Result Sorting**: All restaurants are sorted by distance in ascending order, with the nearest restaurant first.
+
+
+### Address Management
+
+Users can manage their saved addresses through the location selector:
+
+1. **Adding Addresses**: 
+   - Search for a location using autocomplete
+   - Select a location from suggestions
+   - Provide a label (e.g., "Home", "Work")
+   - Optionally add a phone number
+   - Save the address to the database
+
+2. **Viewing Addresses**: 
+   - All saved addresses are displayed in the location selector
+   - If current location is available, distances from current location to each saved address are calculated and displayed
+   - Addresses are sorted by default status first, then by creation date
+
+3. **Selecting Addresses**: 
+   - Clicking a saved address immediately selects it and closes the modal
+   - The restaurant list automatically refreshes with distances from the selected address
+
+4. **Deleting Addresses**: 
+   - Users can delete saved addresses through the location selector
+   - Deletion requires confirmation
+
+### Current Location Handling
+
+The application also supports using the device's current GPS location:
+
+1. **Permission Request**: When the user chooses "Use current location", the app requests location permissions.
+
+2. **Location Retrieval**: Uses Expo Location API to get current coordinates.
+
+3. **Reverse Geocoding**: Attempts to get a human-readable address:
+   - First tries backend reverse geocode API (OLA Maps)
+   - Falls back to Expo Location reverse geocode
+   - Uses coordinates as last resort
+
+4. **Temporary Address**: Creates a temporary address object (not saved to database) with:
+   - Label: "Current Location"
+   - Coordinates from GPS
+   - Address string from reverse geocode
+
+5. **Restaurant Calculation**: Uses the current location coordinates to calculate restaurant distances, same as saved addresses.
 
 ## Distance Calculation
 
@@ -281,9 +350,10 @@ The Haversine formula provides accurate distance calculations for most practical
 
 The application uses Prisma ORM with PostgreSQL. Key models include:
 
-- **User**: Stores user information including username, email, and location coordinates
+- **User**: Stores user information including username, email, and default location coordinates
 - **Restaurant**: Stores restaurant details including name, description, tags, image URL, and location coordinates
 - **Menu**: Stores menu items associated with restaurants, including item name, price, description, image, and vegetarian status
+- **Address**: Stores user's saved addresses with label, full address, coordinates, optional phone number, and default flag
 
 ## Technology Stack
 
