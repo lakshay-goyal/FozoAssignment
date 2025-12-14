@@ -96,7 +96,7 @@ export const RestaurantDetailBottomSheet: React.FC<RestaurantDetailBottomSheetPr
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
       enablePanDownToClose
-      backgroundStyle={{ backgroundColor: '#FFFFFF', borderRadius: 20 }}
+      backgroundStyle={{ backgroundColor: '#FFFFFF', borderRadius:12 }}
       handleIndicatorStyle={{ backgroundColor: '#D3D1D8', width: 40 }}
       backdropComponent={renderBackdrop}
     >
