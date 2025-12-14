@@ -3,6 +3,8 @@ import type { Request } from 'express';
 export interface GetRestaurantsRequest extends Request {
     body: {
         username: string;
+        latitude?: number;
+        longitude?: number;
     };
 }
 
@@ -12,6 +14,8 @@ export interface GetRestaurantByIdRequest extends Request {
     };
     body: {
         username: string;
+        latitude?: number;
+        longitude?: number;
     };
 }
 

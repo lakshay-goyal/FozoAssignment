@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { restaurantService } from '../../../services'
 import type { RestaurantWithDistance } from '../../../types'
+import { useAddress } from '../../../contexts/AddressContext'
 
 interface UseRestaurantReturn {
   restaurant: RestaurantWithDistance | null
@@ -13,6 +14,7 @@ export const useRestaurant = (
   restaurantId: string | string[] | undefined,
   username: string | undefined
 ): UseRestaurantReturn => {
+  const { selectedAddress } = useAddress()
   const [restaurant, setRestaurant] = useState<RestaurantWithDistance | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -26,7 +28,12 @@ export const useRestaurant = (
 
     try {
       setLoading(true)
-      const data = await restaurantService.getRestaurantById(restaurantId, username)
+      // Use selected address coordinates if available
+      const coordinates = selectedAddress
+        ? { latitude: selectedAddress.latitude, longitude: selectedAddress.longitude }
+        : undefined
+
+      const data = await restaurantService.getRestaurantById(restaurantId, username, coordinates)
       setRestaurant(data)
       setError(null)
     } catch (err: any) {
@@ -38,7 +45,7 @@ export const useRestaurant = (
 
   useEffect(() => {
     fetchRestaurant()
-  }, [restaurantId, username])
+  }, [restaurantId, username, selectedAddress])
 
   return {
     restaurant,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { restaurantService } from '../../../services'
 import type { RestaurantWithDistance } from '../../../types'
+import { useAddress } from '../../../contexts/AddressContext'
 
 interface UseRestaurantsReturn {
   restaurants: RestaurantWithDistance[]
@@ -12,6 +13,7 @@ interface UseRestaurantsReturn {
 }
 
 export const useRestaurants = (username: string | undefined): UseRestaurantsReturn => {
+  const { selectedAddress } = useAddress()
   const [restaurants, setRestaurants] = useState<RestaurantWithDistance[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -25,7 +27,11 @@ export const useRestaurants = (username: string | undefined): UseRestaurantsRetu
     }
 
     try {
-      const data = await restaurantService.getRestaurants(username)
+      const coordinates = selectedAddress
+        ? { latitude: selectedAddress.latitude, longitude: selectedAddress.longitude }
+        : undefined
+
+      const data = await restaurantService.getRestaurants(username, coordinates)
       setRestaurants(data)
       setError(null)
     } catch (err: any) {
@@ -40,7 +46,7 @@ export const useRestaurants = (username: string | undefined): UseRestaurantsRetu
     if (username) {
       fetchRestaurants()
     }
-  }, [username])
+  }, [username, selectedAddress])
 
   return {
     restaurants,
@@ -51,4 +57,3 @@ export const useRestaurants = (username: string | undefined): UseRestaurantsRetu
     setRefreshing,
   }
 }
-

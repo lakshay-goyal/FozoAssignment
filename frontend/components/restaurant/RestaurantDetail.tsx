@@ -71,17 +71,6 @@ export const RestaurantDetail = ({
     }
   }
 
-  const handleAddToCart = (menuItem: MenuItem) => {
-    // If onMenuItemPress is provided, use it to open bottom sheet
-    // Otherwise, use the old add to cart functionality
-    if (onMenuItemPress) {
-      onMenuItemPress(menuItem)
-    } else {
-      // TODO: Implement add to cart functionality
-      console.log('Add to cart:', menuItem)
-    }
-  }
-
   // Filter menu items based on selected filter
   const filteredMenu = useMemo(() => {
     if (!restaurant.menu) return []

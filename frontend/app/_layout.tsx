@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
 import { View } from 'react-native'
 import { customFonts } from '../fonts'
+import { AddressProvider } from '../contexts/AddressContext'
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
@@ -31,9 +32,11 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <View style={{ flex: 1 }}>
-        <Slot />
-      </View>
+      <AddressProvider>
+        <View style={{ flex: 1 }}>
+          <Slot />
+        </View>
+      </AddressProvider>
     </ClerkProvider>
   )
 }

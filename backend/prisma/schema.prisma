@@ -17,6 +17,7 @@ model User {
   updatedAt DateTime @updatedAt
   cart      Cart[]
   wishlist  Wishlist[]
+  addresses Address[]
 
   @@index([latitude, longitude])
   @@index([username])
@@ -82,4 +83,21 @@ model Wishlist {
   @@unique([userId, restaurantId])
   @@index([userId])
   @@index([restaurantId])
+}
+
+model Address {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  label       String   // e.g., "Home", "Work"
+  address     String
+  phoneNumber String?
+  latitude    Float
+  longitude   Float
+  isDefault   Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([userId, isDefault])
 }

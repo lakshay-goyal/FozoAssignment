@@ -9,11 +9,13 @@ import {
   RestaurantsSection,
 } from '../../components/home'
 import { useRestaurants, useUserLocation } from './hooks'
+import { useAddress } from '../../contexts/AddressContext'
 import { CATEGORIES, SPECIAL_OFFERS } from './constants'
 import { SignedOutView } from './components'
 
 export default function Page() {
   const { user } = useUser()
+  const { selectedAddress } = useAddress()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('Pizza')
   const [showProfilePopup, setShowProfilePopup] = useState(false)
@@ -27,7 +29,9 @@ export default function Page() {
     setRefreshing,
   } = useRestaurants(user?.username || undefined)
 
-  const { address } = useUserLocation(user?.username || undefined)
+  const { address: defaultAddress } = useUserLocation(user?.username || undefined)
+  
+  const displayAddress = selectedAddress?.address || defaultAddress
 
   const onRefresh = () => {
     setRefreshing(true)
@@ -48,7 +52,7 @@ export default function Page() {
           }
         >
           <HomeHeader
-            address={address}
+            address={displayAddress}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onProfilePress={() => setShowProfilePopup(true)}

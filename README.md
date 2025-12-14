@@ -15,6 +15,9 @@ A restaurant marketplace application with a mobile frontend (React Native/Expo) 
   <img src="frontend/assets/8.png" alt="Screenshot 5" width="200"/>
   <img src="frontend/assets/9.png" alt="Screenshot 5" width="200"/>
   <img src="frontend/assets/10.png" alt="Screenshot 5" width="200"/>
+  <img src="frontend/assets/11.png" alt="Screenshot 5" width="200"/>
+  <img src="frontend/assets/12.png" alt="Screenshot 5" width="200"/>
+  <img src="frontend/assets/13.png" alt="Screenshot 5" width="200"/>
 </div>
 
 ## Features

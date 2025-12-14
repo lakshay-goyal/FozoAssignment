@@ -8,7 +8,6 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  console.log('Starting seed...')
 
   // Clear existing data (optional - remove if you want to keep existing data)
   await prisma.menu.deleteMany()
@@ -99,8 +98,6 @@ async function main() {
       },
     ],
   })
-
-  console.log(`Created ${restaurants.count} restaurants`)
 
   // Get all restaurants to map menu items
   const allRestaurants = await prisma.restaurant.findMany({
@@ -367,8 +364,6 @@ async function main() {
     ],
   })
 
-  console.log(`Created ${menuItems.count} menu items`)
-  console.log('Seed completed successfully!')
 }
 
 main()

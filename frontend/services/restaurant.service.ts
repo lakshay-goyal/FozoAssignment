@@ -13,7 +13,10 @@ interface ApiResponse<T> {
 }
 
 export const restaurantService = {
-  async getRestaurants(username: string): Promise<RestaurantWithDistance[]> {
+  async getRestaurants(
+    username: string,
+    coordinates?: { latitude: number; longitude: number }
+  ): Promise<RestaurantWithDistance[]> {
     if (!BACKEND_URL) {
       throw new Error('Backend URL is not configured')
     }
@@ -23,7 +26,13 @@ export const restaurantService = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({
+        username,
+        ...(coordinates && {
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        }),
+      }),
     })
 
     if (!response.ok) {
@@ -40,7 +49,11 @@ export const restaurantService = {
     throw new Error(data.message || 'Failed to fetch restaurants')
   },
 
-  async getRestaurantById(restaurantId: string, username: string): Promise<RestaurantWithDistance> {
+  async getRestaurantById(
+    restaurantId: string,
+    username: string,
+    coordinates?: { latitude: number; longitude: number }
+  ): Promise<RestaurantWithDistance> {
     if (!BACKEND_URL) {
       throw new Error('Backend URL is not configured')
     }
@@ -50,7 +63,13 @@ export const restaurantService = {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({
+        username,
+        ...(coordinates && {
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        }),
+      }),
     })
 
     if (!response.ok) {
@@ -67,4 +86,3 @@ export const restaurantService = {
     throw new Error(data.message || 'Failed to fetch restaurant')
   },
 }
-

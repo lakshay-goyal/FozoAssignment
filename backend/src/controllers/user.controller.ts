@@ -7,7 +7,6 @@ import type { CreateUserRequest, UserResponse } from '../types/user.types';
 export const createUser = async (req: CreateUserRequest, res: Response) => {
     try {
         const { username, email, latitude, longitude } = req.body;
-        console.log(username, email, latitude, longitude);
         if (!username || !email || latitude === undefined || longitude === undefined) {
             const apiError = new ApiError(400, 'Missing required fields: username, email, latitude, and longitude are required', []);
             return res.status(apiError.statusCode).json(apiError);
@@ -23,7 +22,6 @@ export const createUser = async (req: CreateUserRequest, res: Response) => {
         const user: UserResponse = await prisma.user.create({
             data: { username, email, latitude, longitude },
         })
-        console.log(user);
         const apiResponse = new ApiResponse(201, user, 'User created successfully');
         return res.status(apiResponse.statusCode).json(apiResponse);
     } catch (err: any) {

@@ -5,4 +5,7 @@ export { cartService } from './cart.service'
 export type { CartItem } from './cart.service'
 export { wishlistService } from './wishlist.service'
 export type { WishlistItem } from './wishlist.service'
-
+export { addressService } from './address.service'
+export type { Address, CreateAddressData, UpdateAddressData } from './address.service'
+export { locationService } from './location.service'
+export type { LocationSuggestion, ReverseGeocodeResponse } from './location.service'

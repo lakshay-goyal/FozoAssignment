@@ -7,25 +7,38 @@ import { calculateHaversineDistance } from '../utils/distance';
 
 export const getRestaurants = async (req: GetRestaurantsRequest, res: Response) => {
     try {
-        const { username } = req.body;
+        const { username, latitude, longitude } = req.body;
 
         if (!username) {
             const apiError = new ApiError(400, 'Username is required', []);
             return res.status(apiError.statusCode).json(apiError);
         }
 
-        // Fetch user by username
-        const user = await prisma.user.findUnique({
-            where: { username },
-            select: {
-                latitude: true,
-                longitude: true,
-            },
-        });
+        // Use provided coordinates or fetch user's default location
+        let userLatitude: number;
+        let userLongitude: number;
 
-        if (!user) {
-            const apiError = new ApiError(404, 'User not found', []);
-            return res.status(apiError.statusCode).json(apiError);
+        if (latitude !== undefined && longitude !== undefined) {
+            // Use provided coordinates (from selected address)
+            userLatitude = latitude;
+            userLongitude = longitude;
+        } else {
+            // Fetch user by username for default location
+            const user = await prisma.user.findUnique({
+                where: { username },
+                select: {
+                    latitude: true,
+                    longitude: true,
+                },
+            });
+
+            if (!user) {
+                const apiError = new ApiError(404, 'User not found', []);
+                return res.status(apiError.statusCode).json(apiError);
+            }
+
+            userLatitude = user.latitude;
+            userLongitude = user.longitude;
         }
 
         // Fetch all restaurants with menu items
@@ -38,8 +51,8 @@ export const getRestaurants = async (req: GetRestaurantsRequest, res: Response) 
         // Calculate distance for each restaurant and return the restaurants with the distance
         const restaurantsWithDistance: RestaurantWithDistance[] = restaurants.map((restaurant) => {
             const distance = calculateHaversineDistance(
-                user.latitude,
-                user.longitude,
+                userLatitude,
+                userLongitude,
                 restaurant.latitude,
                 restaurant.longitude
             );
@@ -68,7 +81,7 @@ export const getRestaurants = async (req: GetRestaurantsRequest, res: Response) 
 
 export const getRestaurantById = async (req: GetRestaurantByIdRequest, res: Response) => {
     try {
-        const { username } = req.body;
+        const { username, latitude, longitude } = req.body;
         const { restaurantId } = req.params;
 
         if (!username) {
@@ -87,18 +100,31 @@ export const getRestaurantById = async (req: GetRestaurantByIdRequest, res: Resp
             return res.status(apiError.statusCode).json(apiError);
         }
 
-        // Fetch user by username
-        const user = await prisma.user.findUnique({
-            where: { username },
-            select: {
-                latitude: true,
-                longitude: true,
-            },
-        });
+        // Use provided coordinates or fetch user's default location
+        let userLatitude: number;
+        let userLongitude: number;
 
-        if (!user) {
-            const apiError = new ApiError(404, 'User not found', []);
-            return res.status(apiError.statusCode).json(apiError);
+        if (latitude !== undefined && longitude !== undefined) {
+            // Use provided coordinates (from selected address)
+            userLatitude = latitude;
+            userLongitude = longitude;
+        } else {
+            // Fetch user by username for default location
+            const user = await prisma.user.findUnique({
+                where: { username },
+                select: {
+                    latitude: true,
+                    longitude: true,
+                },
+            });
+
+            if (!user) {
+                const apiError = new ApiError(404, 'User not found', []);
+                return res.status(apiError.statusCode).json(apiError);
+            }
+
+            userLatitude = user.latitude;
+            userLongitude = user.longitude;
         }
 
         // Fetch restaurant by ID with menu items
@@ -116,8 +142,8 @@ export const getRestaurantById = async (req: GetRestaurantByIdRequest, res: Resp
 
         // Calculate distance between user and restaurant
         const distance = calculateHaversineDistance(
-            user.latitude,
-            user.longitude,
+            userLatitude,
+            userLongitude,
             restaurant.latitude,
             restaurant.longitude
         );
