@@ -2,6 +2,16 @@
 
 A restaurant marketplace application with a mobile frontend (React Native/Expo) and a backend API (Node.js/Express) that provides restaurant listings sorted by distance from the user's location.
 
+# Demo Video
+
+<div align="center">
+  <video width="320" height="600" controls>
+    <source src="frontend/assets/FOZO.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
 ## Screenshots
 
 <div align="center">
