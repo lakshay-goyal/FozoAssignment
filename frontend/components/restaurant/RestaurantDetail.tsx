@@ -1,13 +1,18 @@
+import React, { useState } from 'react'
 import {
   View,
   Text,
   TouchableOpacity,
   Image,
   FlatList,
+  Alert,
 } from "react-native"
 import { Heart, ArrowLeft, Flame } from "lucide-react-native"
+import { useUser } from '@clerk/clerk-expo'
+import { useFocusEffect } from 'expo-router'
 import type { RestaurantWithDistance, MenuItem } from "../../types"
 import { MenuCard } from "./MenuCard"
+import { wishlistService } from "../../services"
 
 interface RestaurantDetailProps {
   restaurant: RestaurantWithDistance
@@ -20,6 +25,49 @@ export const RestaurantDetail = ({
   onBackPress,
   onMenuItemPress,
 }: RestaurantDetailProps) => {
+  const { user } = useUser()
+  const [isInWishlist, setIsInWishlist] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  // Fetch wishlist status when component mounts or comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      checkWishlistStatus()
+    }, [user?.username, restaurant.id])
+  )
+
+  const checkWishlistStatus = async () => {
+    if (!user?.username) return
+
+    try {
+      const wishlist = await wishlistService.getWishlist(user.username)
+      const isWishlisted = wishlist.some((item) => item.restaurantId === restaurant.id)
+      setIsInWishlist(isWishlisted)
+    } catch (error) {
+      console.error('Error checking wishlist status:', error)
+    }
+  }
+
+  const handleToggleWishlist = async () => {
+    if (!user?.username || loading) return
+
+    try {
+      setLoading(true)
+      if (isInWishlist) {
+        await wishlistService.removeFromWishlist(user.username, restaurant.id)
+        setIsInWishlist(false)
+      } else {
+        await wishlistService.addToWishlist(user.username, restaurant.id)
+        setIsInWishlist(true)
+      }
+    } catch (error: any) {
+      console.error('Error toggling wishlist:', error)
+      Alert.alert('Error', error.message || 'Failed to update wishlist')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleAddToCart = (menuItem: MenuItem) => {
     // If onMenuItemPress is provided, use it to open bottom sheet
     // Otherwise, use the old add to cart functionality
@@ -41,8 +89,16 @@ export const RestaurantDetail = ({
 
         <Text className="font-sans text-lg font-semibold text-black">Details</Text>
 
-        <TouchableOpacity activeOpacity={0.7}>
-          <Heart size={22} color="#111" />
+        <TouchableOpacity
+          onPress={handleToggleWishlist}
+          disabled={loading}
+          activeOpacity={0.7}
+        >
+          <Heart
+            size={22}
+            color={isInWishlist ? "#FF6B57" : "#111"}
+            fill={isInWishlist ? "#FF6B57" : "none"}
+          />
         </TouchableOpacity>
       </View>
 

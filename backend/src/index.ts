@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/user.routes';
 import restaurantRoutes from './routes/restaurant.routes';
+import cartRoutes from './routes/cart.routes';
+import wishlistRoutes from './routes/wishlist.routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,6 +14,8 @@ app.use(express.json());
 // Routes
 app.use('/users', userRoutes);
 app.use('/restaurants', restaurantRoutes);
+app.use('/cart', cartRoutes);
+app.use('/wishlist', wishlistRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

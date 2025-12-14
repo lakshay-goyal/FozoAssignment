@@ -1,5 +1,5 @@
 import { TouchableOpacity, View, Text, Image } from 'react-native'
-import { Heart, Truck, Clock } from 'lucide-react-native'
+import { Truck, Clock } from 'lucide-react-native'
 import type { RestaurantWithDistance } from '../../types'
 import { fontFamily } from '../../fonts'
 
@@ -24,26 +24,13 @@ export const RestaurantCard = ({ restaurant, onPress }: RestaurantCardProps) => 
         elevation: 5,
       }}
     >
-      {/* Image with Heart Icon */}
+      {/* Image */}
       <View className="relative" style={{ height: 136 }}>
         <Image
           source={{ uri: restaurant.imageUrl || 'https://via.placeholder.com/266x136' }}
           className="w-full h-full"
           resizeMode="cover"
         />
-        <TouchableOpacity
-          className="absolute top-2 right-2 w-8 h-8 rounded-full items-center justify-center"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.3)',
-            shadowColor: '#FE724C',
-            shadowOffset: { width: 0, height: 7 },
-            shadowOpacity: 0.4,
-            shadowRadius: 15,
-            elevation: 5,
-          }}
-        >
-          <Heart size={16} color="#FFFFFF" fill="#FFFFFF" />
-        </TouchableOpacity>
       </View>
 
       {/* Content */}

@@ -15,22 +15,25 @@ model User {
   longitude Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  cart      Cart[]
+  wishlist  Wishlist[]
 
   @@index([latitude, longitude])
   @@index([username])
 }
 
 model Restaurant {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String?
   imageUrl    String?
   tags        String[]
   latitude    Float
   longitude   Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   menu        Menu[]
+  wishlist    Wishlist[]
 
   @@index([latitude, longitude])
   @@index([name])
@@ -45,8 +48,38 @@ model Menu {
   isVeg        Boolean    @default(true)
   restaurantId Int
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  cart         Cart[]
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
+  @@index([restaurantId])
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  menuId    Int
+  quantity  Int      @default(1)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, menuId])
+  @@index([userId])
+  @@index([menuId])
+}
+
+model Wishlist {
+  id           Int        @id @default(autoincrement())
+  userId       Int
+  restaurantId Int
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([userId, restaurantId])
+  @@index([userId])
   @@index([restaurantId])
 }

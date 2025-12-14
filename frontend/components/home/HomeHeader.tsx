@@ -4,6 +4,7 @@ import { useUser } from '@clerk/clerk-expo'
 import { fontFamily } from '../../fonts'
 import { LocationSelector } from '../ui/LocationSelector'
 import { SearchBar } from '../ui/SearchBar'
+import { useDrawer } from '../../contexts/DrawerContext'
 
 interface HomeHeaderProps {
   address: string
@@ -21,11 +22,13 @@ export const HomeHeader = ({
   onLocationPress,
 }: HomeHeaderProps) => {
   const { user } = useUser()
+  const { openDrawer } = useDrawer()
 
   return (
     <View className="px-6 pt-12 pb-4">
       <View className="flex-row justify-between items-center mb-4 gap-6">
         <TouchableOpacity
+          onPress={openDrawer}
           className="w-10 h-10 bg-white rounded-lg items-center justify-center shadow-sm"
           style={{
             shadowColor: '#D3D1D8',
